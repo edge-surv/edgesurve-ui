@@ -58,7 +58,7 @@ export function Logo({ className, animationEnabled = true }: LogoProps) {
             x="574.75"
             y="2698.28"
             className="fill-current stroke-current stroke-[3px] text-[676.71px]"
-            style={{ fontFamily: "'METHANERSE Free Trial', sans-serif" }}
+            style={{ fontFamily: "sans-serif", fontWeight: "bold" }}
           >
             edge
           </text>
@@ -66,7 +66,7 @@ export function Logo({ className, animationEnabled = true }: LogoProps) {
             x="2462.78"
             y="2698.28"
             className="fill-current stroke-current stroke-[3px] text-[676.71px]"
-            style={{ fontFamily: "'METHANERSE Free Trial', sans-serif" }}
+            style={{ fontFamily: "sans-serif", fontWeight: "bold" }}
           >
             surve
           </text>
