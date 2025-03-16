@@ -153,8 +153,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-
-        <Separator className="mx-2 my-4 bg-sidebar-border" />
       </SidebarContent>
       <SidebarFooter>
         <div className="p-4">
