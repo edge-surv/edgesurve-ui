@@ -10,7 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { User, RefreshCw, Camera, Settings } from "lucide-react"
-import { Checkbox } from "@/components/ui/checkbox"
 
 export default function SettingsPage() {
   return (
@@ -265,236 +264,124 @@ export default function SettingsPage() {
 
                 {/* System Settings */}
                 <TabsContent value="system" className="mt-0">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="md:col-span-2 space-y-6">
-                      <Card>
-                        <CardHeader>
-                          <CardTitle>System Settings</CardTitle>
-                          <CardDescription>Configure general system preferences</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-6">
-                          <div className="space-y-4">
-                            <h3 className="text-lg font-medium">System Information</h3>
-                            <div className="grid grid-cols-2 gap-4">
-                              <div>
-                                <p className="text-sm font-medium">System Version</p>
-                                <p className="text-sm text-muted-foreground">EdgeSurv v1.0.0</p>
-                              </div>
-                              <div>
-                                <p className="text-sm font-medium">Last Updated</p>
-                                <p className="text-sm text-muted-foreground">March 12, 2025</p>
-                              </div>
-                            </div>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>System Settings</CardTitle>
+                      <CardDescription>Configure general system preferences</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-medium">System Information</h3>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <p className="text-sm font-medium">System Version</p>
+                            <p className="text-sm text-muted-foreground">EdgeSurv v1.0.0</p>
                           </div>
-
-                          <Separator />
-
-                          <div className="space-y-4">
-                            <h3 className="text-lg font-medium">License Information</h3>
-                            <div className="space-y-2">
-                              <Label htmlFor="license-key">License Key</Label>
-                              <div className="flex gap-2">
-                                <Input id="license-key" placeholder="Enter your license key" />
-                                <Button>Activate</Button>
-                              </div>
-                              <p className="text-xs text-muted-foreground">
-                                Enter your license key to activate all features of EdgeSurv
-                              </p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
-                              <div>
-                                <p className="text-sm font-medium">License Type</p>
-                                <p className="text-sm text-muted-foreground">Professional Edition</p>
-                              </div>
-                              <div>
-                                <p className="text-sm font-medium">License Expires</p>
-                                <p className="text-sm text-muted-foreground">December 31, 2025</p>
-                              </div>
-                            </div>
+                          <div>
+                            <p className="text-sm font-medium">Last Updated</p>
+                            <p className="text-sm text-muted-foreground">March 12, 2025</p>
                           </div>
+                        </div>
+                      </div>
 
-                          <Separator />
+                      <Separator />
 
-                          <div className="space-y-4">
-                            <h3 className="text-lg font-medium">System Updates</h3>
-                            <div className="space-y-2">
-                              <div className="flex items-center justify-between">
-                                <Label htmlFor="auto-update">Automatic Updates</Label>
-                                <Switch id="auto-update" defaultChecked />
-                              </div>
-                            </div>
-                            <div className="space-y-2">
-                              <Label htmlFor="patch-version">Patch Version</Label>
-                              <div className="flex gap-2">
-                                <Select>
-                                  <SelectTrigger id="patch-version">
-                                    <SelectValue placeholder="Select patch version" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    <SelectItem value="latest">Latest (v1.0.5)</SelectItem>
-                                    <SelectItem value="1.0.4">v1.0.4</SelectItem>
-                                    <SelectItem value="1.0.3">v1.0.3</SelectItem>
-                                    <SelectItem value="1.0.2">v1.0.2</SelectItem>
-                                  </SelectContent>
-                                </Select>
-                                <Button variant="outline">Apply Patch</Button>
-                              </div>
-                            </div>
-                            <Button variant="outline" className="gap-2">
-                              <RefreshCw className="h-4 w-4" />
-                              Check for Updates
-                            </Button>
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-medium">License Information</h3>
+                        <div className="space-y-2">
+                          <Label htmlFor="license-key">License Key</Label>
+                          <div className="flex gap-2">
+                            <Input id="license-key" placeholder="Enter your license key" />
+                            <Button>Activate</Button>
                           </div>
-
-                          <Separator />
-
-                          <div className="space-y-4">
-                            <h3 className="text-lg font-medium">System Preferences</h3>
-                            <div className="space-y-2">
-                              <div className="flex items-center justify-between">
-                                <Label htmlFor="analytics">Share Analytics</Label>
-                                <Switch id="analytics" defaultChecked />
-                              </div>
-                              <div className="flex items-center justify-between">
-                                <Label htmlFor="auto-login">Auto Login</Label>
-                                <Switch id="auto-login" />
-                              </div>
-                            </div>
-
-                            <div className="space-y-2">
-                              <Label htmlFor="retention">Default Retention Period (Days)</Label>
-                              <Input id="retention" type="number" defaultValue="30" />
-                            </div>
-
-                            <div className="space-y-2">
-                              <Label htmlFor="theme">System Theme</Label>
-                              <Select defaultValue="system">
-                                <SelectTrigger id="theme">
-                                  <SelectValue placeholder="Select theme" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="light">Light</SelectItem>
-                                  <SelectItem value="dark">Dark</SelectItem>
-                                  <SelectItem value="system">System Default</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
+                          <p className="text-xs text-muted-foreground">
+                            Enter your license key to activate all features of EdgeSurv
+                          </p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <p className="text-sm font-medium">License Type</p>
+                            <p className="text-sm text-muted-foreground">Professional Edition</p>
                           </div>
-                        </CardContent>
-                        <CardFooter>
-                          <Button className="ml-auto">Save Changes</Button>
-                        </CardFooter>
-                      </Card>
-                    </div>
+                          <div>
+                            <p className="text-sm font-medium">License Expires</p>
+                            <p className="text-sm text-muted-foreground">December 31, 2025</p>
+                          </div>
+                        </div>
+                      </div>
 
-                    <div className="space-y-6">
-                      <Card>
-                        <CardHeader>
-                          <CardTitle>AI Agent</CardTitle>
-                          <CardDescription>Configure AI surveillance agent</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
+                      <Separator />
+
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-medium">System Updates</h3>
+                        <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <Label htmlFor="ai-agent-active">AI Agent Active</Label>
-                            <Switch id="ai-agent-active" defaultChecked />
+                            <Label htmlFor="auto-update">Automatic Updates</Label>
+                            <Switch id="auto-update" defaultChecked />
                           </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="ai-model">AI Model</Label>
-                            <Select defaultValue="standard">
-                              <SelectTrigger id="ai-model">
-                                <SelectValue placeholder="Select AI model" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="patch-version">Patch Version</Label>
+                          <div className="flex gap-2">
+                            <Select>
+                              <SelectTrigger id="patch-version">
+                                <SelectValue placeholder="Select patch version" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="standard">Standard</SelectItem>
-                                <SelectItem value="advanced">Advanced</SelectItem>
-                                <SelectItem value="premium">Premium</SelectItem>
+                                <SelectItem value="latest">Latest (v1.0.5)</SelectItem>
+                                <SelectItem value="1.0.4">v1.0.4</SelectItem>
+                                <SelectItem value="1.0.3">v1.0.3</SelectItem>
+                                <SelectItem value="1.0.2">v1.0.2</SelectItem>
                               </SelectContent>
                             </Select>
+                            <Button variant="outline">Apply Patch</Button>
                           </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="detection-types">Detection Types</Label>
-                            <div className="space-y-2">
-                              <div className="flex items-center space-x-2">
-                                <Checkbox id="detect-person" defaultChecked />
-                                <Label htmlFor="detect-person" className="text-sm">
-                                  Person
-                                </Label>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <Checkbox id="detect-vehicle" defaultChecked />
-                                <Label htmlFor="detect-vehicle" className="text-sm">
-                                  Vehicle
-                                </Label>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <Checkbox id="detect-animal" />
-                                <Label htmlFor="detect-animal" className="text-sm">
-                                  Animal
-                                </Label>
-                              </div>
-                              <div className="flex items-center space-x-2">
-                                <Checkbox id="detect-object" />
-                                <Label htmlFor="detect-object" className="text-sm">
-                                  Object
-                                </Label>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                        <CardFooter>
-                          <Button className="w-full">Apply AI Settings</Button>
-                        </CardFooter>
-                      </Card>
+                        </div>
+                        <Button variant="outline" className="gap-2">
+                          <RefreshCw className="h-4 w-4" />
+                          Check for Updates
+                        </Button>
+                      </div>
 
-                      <Card>
-                        <CardHeader>
-                          <CardTitle>IoT Integration</CardTitle>
-                          <CardDescription>Connect with IoT devices</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
+                      <Separator />
+
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-medium">System Preferences</h3>
+                        <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <Label htmlFor="iot-enabled">Enable IoT Integration</Label>
-                            <Switch id="iot-enabled" />
+                            <Label htmlFor="analytics">Share Analytics</Label>
+                            <Switch id="analytics" defaultChecked />
                           </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="iot-protocol">Protocol</Label>
-                            <Select>
-                              <SelectTrigger id="iot-protocol">
-                                <SelectValue placeholder="Select protocol" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="mqtt">MQTT</SelectItem>
-                                <SelectItem value="http">HTTP/REST</SelectItem>
-                                <SelectItem value="zigbee">Zigbee</SelectItem>
-                                <SelectItem value="zwave">Z-Wave</SelectItem>
-                              </SelectContent>
-                            </Select>
+                          <div className="flex items-center justify-between">
+                            <Label htmlFor="auto-login">Auto Login</Label>
+                            <Switch id="auto-login" />
                           </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="iot-server">Server Address</Label>
-                            <Input id="iot-server" placeholder="e.g., mqtt://iot.example.com" />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="iot-auth">Authentication</Label>
-                            <Select>
-                              <SelectTrigger id="iot-auth">
-                                <SelectValue placeholder="Select auth method" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="none">None</SelectItem>
-                                <SelectItem value="basic">Basic Auth</SelectItem>
-                                <SelectItem value="token">Token</SelectItem>
-                                <SelectItem value="cert">Certificate</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </CardContent>
-                        <CardFooter>
-                          <Button className="w-full">Connect Devices</Button>
-                        </CardFooter>
-                      </Card>
-                    </div>
-                  </div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label htmlFor="retention">Default Retention Period (Days)</Label>
+                          <Input id="retention" type="number" defaultValue="30" />
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label htmlFor="theme">System Theme</Label>
+                          <Select defaultValue="system">
+                            <SelectTrigger id="theme">
+                              <SelectValue placeholder="Select theme" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="light">Light</SelectItem>
+                              <SelectItem value="dark">Dark</SelectItem>
+                              <SelectItem value="system">System Default</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button className="ml-auto">Save Changes</Button>
+                    </CardFooter>
+                  </Card>
                 </TabsContent>
               </div>
             </div>

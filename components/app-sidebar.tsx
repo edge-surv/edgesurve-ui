@@ -1,124 +1,137 @@
-"use client";
+"use client"
 
-import type React from "react";
+import type React from "react"
 
+import { useState } from "react"
 import {
-  Bell,
   Camera,
-  HelpCircle,
   LayoutDashboard,
-  LogOut,
-  Moon,
   Search,
   Settings,
-  Sun,
   Video,
-} from "lucide-react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+  Bell,
+  User,
+  LogOut,
+  ChevronDown,
+  HelpCircle,
+} from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import Link from "next/link"
 
-import { useTheme } from "@/components/theme-provider";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Logo } from "@/components/logo"
+import { useTheme } from "@/components/theme-provider"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
-} from "@/components/ui/sidebar";
-import Image from "next/image";
+} from "@/components/ui/sidebar"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import logo from "@/public/logo.png";
+} from "@/components/ui/dropdown-menu"
+import { Badge } from "@/components/ui/badge"
+import { useToast } from "@/hooks/use-toast"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { setTheme, theme } = useTheme();
-  const pathname = usePathname();
-  const router = useRouter();
-
-  const [unreadNotifications, setUnreadNotifications] = useState(0);
+  const { setTheme, theme } = useTheme()
+  const pathname = usePathname()
+  const router = useRouter()
+  const { toast } = useToast()
+  const [unreadNotifications, setUnreadNotifications] = useState(0)
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    email: "",
+    avatar: "/placeholder.svg?height=32&width=32",
+  })
 
   const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-  };
+    const newTheme = theme === "dark" ? "light" : "dark"
+    setTheme(newTheme)
+  }
 
   const handleLogout = () => {
     // Simulate logout process
     setTimeout(() => {
-      router.push("/");
-    }, 1000);
-  };
+      router.push("/")
+    }, 1000)
+  }
 
   const handleProfileClick = () => {
-    router.push("/settings");
-  };
+    router.push("/settings")
+  }
 
   const menuItems = [
     {
       title: "Dashboard",
       icon: LayoutDashboard,
       url: "/",
+      color: "text-blue-500",
     },
     {
       title: "Livestream",
       icon: Video,
       url: "/livestream",
+      color: "text-red-500",
     },
     {
       title: "Camera",
       icon: Camera,
-      url: "/cameras",
+      url: "/camera-settings",
+      color: "text-green-500",
     },
     {
       title: "Intelligent Search",
       icon: Search,
       url: "/search",
+      color: "text-purple-500",
     },
     {
       title: "Notifications",
       icon: Bell,
       url: "/notifications",
       badge: unreadNotifications.toString(),
+      color: "text-yellow-500",
     },
     {
       title: "Help Center",
       icon: HelpCircle,
       url: "/help",
+      color: "text-teal-500",
     },
     {
       title: "Settings",
       icon: Settings,
       url: "/settings",
+      color: "text-gray-500",
     },
-  ];
+  ]
 
   return (
     <Sidebar className="border-r" {...props}>
-      <div className="px-3 py-2">
-        <Image
-          src={logo}
-          alt="EdgeSurv Logo"
-          width={200}
-          height={30}
-          className="w-auto object-contain"
-          priority
-        />
-      </div>
+      <SidebarHeader className="pt-2 pb-4">
+        <div className="px-3 py-2">
+          <Logo className="w-full h-auto transition-all duration-300 hover:scale-105" />
+        </div>
+        <Separator className="mx-2 bg-sidebar-border" />
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
+          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (
@@ -127,21 +140,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     asChild
                     isActive={pathname === item.url}
                     onClick={() => {
-                      if (
-                        item.title === "Notifications" &&
-                        unreadNotifications > 0
-                      ) {
-                        setUnreadNotifications(0);
+                      if (item.title === "Notifications" && unreadNotifications > 0) {
+                        setUnreadNotifications(0)
                       }
                     }}
                   >
                     <Link href={item.url} className="group">
-                      <item.icon className="transition-transform duration-300 group-hover:scale-110" />
+                      <item.icon className={`transition-transform duration-300 group-hover:scale-110 ${item.color}`} />
                       <span>{item.title}</span>
                       {item.badge && Number.parseInt(item.badge) > 0 && (
-                        <Badge className="ml-auto bg-primary text-primary-foreground">
-                          {item.badge}
-                        </Badge>
+                        <Badge className="ml-auto bg-primary text-primary-foreground">{item.badge}</Badge>
                       )}
                     </Link>
                   </SidebarMenuButton>
@@ -154,44 +162,51 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarFooter>
         <div className="p-4">
           {/* User profile section */}
-
-          <Separator className="mx-2 mb-4 bg-sidebar-border" />
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-full mb-2 border-none ring-0"
-              >
-                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                <span className="sr-only">Toggle theme</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setTheme("light")}>
-                Light
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>
-                Dark
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")}>
-                System
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          <Button onClick={handleLogout} className="w-full mb-2">
-            <LogOut className="mr-2 h-4 w-4" />
-            Log out
-          </Button>
-
-          <div className="mt-4 text-center text-xs text-muted-foreground">
-            EdgeSurv © {new Date().getFullYear()}
+          <div className="px-3 py-2 mb-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="w-full justify-start gap-2 px-2">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={userInfo.avatar} alt="User" />
+                    <AvatarFallback>
+                      {userInfo.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-1 flex-col items-start text-left">
+                    <span className="text-sm font-medium">{userInfo.name}</span>
+                    <span className="text-xs text-muted-foreground">{userInfo.email}</span>
+                  </div>
+                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-[200px]">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleProfileClick}>
+                  <User className="mr-2 h-4 w-4" />
+                  Profile
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push("/settings")}>
+                  <Settings className="mr-2 h-4 w-4" />
+                  Settings
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
+          <Separator className="mx-2 mb-4 bg-sidebar-border" />
+          <div className="mt-4 text-center text-xs text-muted-foreground">EdgeSurve v1.0.0</div>
         </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  );
+  )
 }
+
