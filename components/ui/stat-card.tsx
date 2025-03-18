@@ -14,6 +14,9 @@ interface StatCardProps {
   className?: string
   isLoading?: boolean
   onClick?: () => void
+  showToggle?: boolean
+  isActive?: boolean
+  onToggle?: () => void
 }
 
 export function StatCard({
@@ -26,6 +29,9 @@ export function StatCard({
   className,
   isLoading = false,
   onClick,
+  showToggle = false,
+  isActive = false,
+  onToggle,
 }: StatCardProps) {
   return (
     <div
@@ -38,7 +44,28 @@ export function StatCard({
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-muted-foreground">{title}</p>
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-muted-foreground">{title}</p>
+            {showToggle && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onToggle?.()
+                }}
+                className={cn(
+                  "ml-2 rounded-full w-12 h-6 flex items-center transition-colors",
+                  isActive ? "bg-green-500 justify-end" : "bg-gray-300 justify-start",
+                )}
+              >
+                <span
+                  className={cn(
+                    "h-5 w-5 rounded-full transform transition-transform",
+                    isActive ? "bg-white translate-x-[-4px]" : "bg-white translate-x-[4px]",
+                  )}
+                ></span>
+              </button>
+            )}
+          </div>
           {isLoading ? <Skeleton className="mt-2 h-8 w-16" /> : <h3 className="mt-2 text-3xl font-bold">{value}</h3>}
           {description && <p className="mt-1 text-xs text-muted-foreground">{description}</p>}
           {trend &&

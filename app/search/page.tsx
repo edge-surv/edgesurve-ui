@@ -68,7 +68,7 @@ export default function SearchPage() {
                     </Button>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label>Date Range</Label>
                       <div className="flex gap-2">
@@ -81,23 +81,6 @@ export default function SearchPage() {
                           End Date
                         </Button>
                       </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label>Event Type</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select event type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="all">All Events</SelectItem>
-                          <SelectItem value="motion">Motion Detection</SelectItem>
-                          <SelectItem value="person">Person Detected</SelectItem>
-                          <SelectItem value="alert">System Alerts</SelectItem>
-                          <SelectItem value="login">User Login</SelectItem>
-                          <SelectItem value="config">Configuration Changes</SelectItem>
-                        </SelectContent>
-                      </Select>
                     </div>
 
                     <div className="space-y-2">
@@ -202,182 +185,137 @@ export default function SearchPage() {
             <TabsContent value="video" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Video Query</CardTitle>
+                  <CardTitle>Search Through Video</CardTitle>
                   <CardDescription>
                     Search through video footage using AI-powered object and event detection
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <Tabs defaultValue="camera">
-                    <TabsList className="w-full grid grid-cols-2 mb-6">
-                      <TabsTrigger value="camera">Search Camera Footage</TabsTrigger>
-                      <TabsTrigger value="upload">Upload Local Video</TabsTrigger>
-                    </TabsList>
+                <CardContent className="space-y-4">
+                  {/* AI-powered text search */}
+                  <div className="space-y-2">
+                    <Label>AI-Powered Video Search</Label>
+                    <div className="relative">
+                      <SearchIcon className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        placeholder="Describe what you're looking for... (e.g., 'person wearing red jacket near entrance')"
+                        className="pl-10"
+                      />
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Use natural language to describe objects, people, activities, or scenarios you want to find in the
+                      video footage.
+                    </p>
+                  </div>
 
-                    {/* Camera Footage Search */}
-                    <TabsContent value="camera" className="space-y-4">
-                      {/* Add AI-powered text search */}
-                      <div className="space-y-2">
-                        <Label>AI-Powered Video Search</Label>
-                        <div className="relative">
-                          <SearchIcon className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                          <Input
-                            placeholder="Describe what you're looking for... (e.g., 'person wearing red jacket near entrance')"
-                            className="pl-10"
-                          />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label>Select Camera</Label>
+                      <Select defaultValue="front-entrance">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select camera" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="front-entrance">Front Entrance</SelectItem>
+                          <SelectItem value="parking-lot">Parking Lot</SelectItem>
+                          <SelectItem value="reception">Reception Area</SelectItem>
+                          <SelectItem value="back-door">Back Door</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label>Date & Time Range</Label>
+                      <div className="flex flex-col gap-2">
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="sm" className="w-full gap-2">
+                            <CalendarIcon className="h-4 w-4" />
+                            Start Date
+                          </Button>
+                          <Button variant="outline" size="sm" className="w-full gap-2">
+                            <ClockIcon className="h-4 w-4" />
+                            Start Time
+                          </Button>
                         </div>
-                        <p className="text-xs text-muted-foreground">
-                          Use natural language to describe objects, people, activities, or scenarios you want to find in
-                          the video footage.
-                        </p>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label>Select Camera</Label>
-                          <Select defaultValue="front-entrance">
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select camera" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="front-entrance">Front Entrance</SelectItem>
-                              <SelectItem value="parking-lot">Parking Lot</SelectItem>
-                              <SelectItem value="reception">Reception Area</SelectItem>
-                              <SelectItem value="back-door">Back Door</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label>Time Range</Label>
-                          <div className="flex gap-2">
-                            <Button variant="outline" size="sm" className="w-full gap-2">
-                              <ClockIcon className="h-4 w-4" />
-                              Start Time
-                            </Button>
-                            <Button variant="outline" size="sm" className="w-full gap-2">
-                              <ClockIcon className="h-4 w-4" />
-                              End Time
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label>Search For</Label>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                          <div className="flex items-center space-x-2">
-                            <Checkbox id="person" />
-                            <Label htmlFor="person" className="text-sm">
-                              Person
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Checkbox id="vehicle" />
-                            <Label htmlFor="vehicle" className="text-sm">
-                              Vehicle
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Checkbox id="animal" />
-                            <Label htmlFor="animal" className="text-sm">
-                              Animal
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Checkbox id="motion" />
-                            <Label htmlFor="motion" className="text-sm">
-                              Motion
-                            </Label>
-                          </div>
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="sm" className="w-full gap-2">
+                            <CalendarIcon className="h-4 w-4" />
+                            End Date
+                          </Button>
+                          <Button variant="outline" size="sm" className="w-full gap-2">
+                            <ClockIcon className="h-4 w-4" />
+                            End Time
+                          </Button>
                         </div>
                       </div>
+                    </div>
+                  </div>
 
-                      <div className="space-y-2">
-                        <Label>Detection Confidence</Label>
-                        <div className="px-2">
-                          <Slider defaultValue={[70]} max={100} step={1} />
+                  <div className="border-t pt-4 mt-4">
+                    <div className="flex items-center justify-between mb-4">
+                      <Label>Upload Local Video</Label>
+                      <Switch id="use-local-video" />
+                    </div>
+                    <div className="border-2 border-dashed rounded-lg p-6 text-center">
+                      <div className="flex flex-col items-center gap-4">
+                        <div className="rounded-full bg-primary/10 p-4">
+                          <Upload className="h-8 w-8 text-primary" />
                         </div>
-                        <div className="flex justify-between text-xs text-muted-foreground">
-                          <span>Low (More Results)</span>
-                          <span>High (More Accurate)</span>
+                        <div>
+                          <p className="font-medium">Drag and drop video files here</p>
+                          <p className="text-sm text-muted-foreground">Supports MP4, AVI, MOV up to 500MB</p>
                         </div>
+                        <Button size="sm">Browse Files</Button>
                       </div>
+                    </div>
+                  </div>
 
+                  <div className="space-y-2">
+                    <Label>Search For</Label>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                       <div className="flex items-center space-x-2">
-                        <Switch id="draw-boxes" />
-                        <Label htmlFor="draw-boxes">Highlight detected objects in results</Label>
+                        <Checkbox id="person" />
+                        <Label htmlFor="person" className="text-sm">
+                          Person
+                        </Label>
                       </div>
-
-                      <Button className="w-full">Search Video Footage</Button>
-                    </TabsContent>
-
-                    {/* Upload Local Video */}
-                    <TabsContent value="upload" className="space-y-4">
-                      <div className="border-2 border-dashed rounded-lg p-10 text-center">
-                        <div className="flex flex-col items-center gap-4">
-                          <div className="rounded-full bg-primary/10 p-4">
-                            <Upload className="h-8 w-8 text-primary" />
-                          </div>
-                          <div>
-                            <p className="font-medium">Drag and drop video files here</p>
-                            <p className="text-sm text-muted-foreground">Supports MP4, AVI, MOV up to 500MB</p>
-                          </div>
-                          <Button size="sm">Browse Files</Button>
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label>Search For</Label>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                          <div className="flex items-center space-x-2">
-                            <Checkbox id="person-upload" />
-                            <Label htmlFor="person-upload" className="text-sm">
-                              Person
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Checkbox id="vehicle-upload" />
-                            <Label htmlFor="vehicle-upload" className="text-sm">
-                              Vehicle
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Checkbox id="animal-upload" />
-                            <Label htmlFor="animal-upload" className="text-sm">
-                              Animal
-                            </Label>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Checkbox id="motion-upload" />
-                            <Label htmlFor="motion-upload" className="text-sm">
-                              Motion
-                            </Label>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label>Detection Confidence</Label>
-                        <div className="px-2">
-                          <Slider defaultValue={[70]} max={100} step={1} />
-                        </div>
-                        <div className="flex justify-between text-xs text-muted-foreground">
-                          <span>Low (More Results)</span>
-                          <span>High (More Accurate)</span>
-                        </div>
-                      </div>
-
                       <div className="flex items-center space-x-2">
-                        <Switch id="draw-boxes-upload" />
-                        <Label htmlFor="draw-boxes-upload">Highlight detected objects in results</Label>
+                        <Checkbox id="vehicle" />
+                        <Label htmlFor="vehicle" className="text-sm">
+                          Vehicle
+                        </Label>
                       </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="animal" />
+                        <Label htmlFor="animal" className="text-sm">
+                          Animal
+                        </Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="motion" />
+                        <Label htmlFor="motion" className="text-sm">
+                          Motion
+                        </Label>
+                      </div>
+                    </div>
+                  </div>
 
-                      <Button className="w-full" disabled>
-                        Analyze Video
-                      </Button>
-                    </TabsContent>
-                  </Tabs>
+                  <div className="space-y-2">
+                    <Label>Detection Confidence</Label>
+                    <div className="px-2">
+                      <Slider defaultValue={[70]} max={100} step={1} />
+                    </div>
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>Low (More Results)</span>
+                      <span>High (More Accurate)</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Switch id="draw-boxes" />
+                    <Label htmlFor="draw-boxes">Highlight detected objects in results</Label>
+                  </div>
+
+                  <Button className="w-full">Search Video Footage</Button>
                 </CardContent>
               </Card>
 

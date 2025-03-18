@@ -49,7 +49,7 @@ export function CameraFeed({
   return (
     <div
       className={cn(
-        "group relative overflow-hidden rounded-xl border bg-card shadow-subtle transition-all hover:shadow-elevated",
+        "group relative overflow-hidden rounded-xl border bg-card shadow-subtle transition-all hover:shadow-elevated h-full",
         className,
       )}
     >

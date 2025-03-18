@@ -1,19 +1,24 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Camera, Clock, Eye, Users } from "lucide-react"
+import { Camera, Clock, Bot } from "lucide-react"
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import { StatCard } from "@/components/ui/stat-card"
 import { CameraFeed } from "@/components/camera-feed"
 import { ActivityLog } from "@/components/activity-log"
-import { SystemStatus } from "@/components/system-status"
 import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
+import { Card } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
+import { useRouter } from "next/navigation"
 
 export default function Home() {
   const { toast } = useToast()
+  const router = useRouter()
   const [lastUpdated, setLastUpdated] = useState("Just now")
   const [activityItems, setActivityItems] = useState([])
   const [cameraStats, setCameraStats] = useState({ active: 0, total: 0 })
@@ -21,6 +26,7 @@ export default function Home() {
   const [peopleStats, setPeopleStats] = useState({ count: 0, trend: "neutral", trendValue: "Same as average" })
   const [recordingHours, setRecordingHours] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+  const [agentActive, setAgentActive] = useState(true)
 
   // Replace the entire useEffect block with this simplified version that just sets loading state
   useEffect(() => {
@@ -80,7 +86,7 @@ export default function Home() {
         </header>
         <main className="animate-fade-in flex flex-1 flex-col gap-6 p-6">
           {/* Stats row */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 md:grid-cols-2">
             <StatCard
               title="Active Cameras"
               value={`${cameraStats.active}/${cameraStats.total}`}
@@ -88,29 +94,25 @@ export default function Home() {
               trend="up"
               trendValue="2 more than yesterday"
               isLoading={isLoading}
+              onClick={() => {
+                router.push("/camera-settings")
+              }}
             />
             <StatCard
-              title="Current Viewers"
-              value={viewerStats.toString()}
-              icon={Eye}
-              trend="neutral"
-              trendValue="Same as average"
+              title="Agent Status"
+              value={agentActive ? "Active" : "Inactive"}
+              icon={Bot}
+              description="AI surveillance agent"
               isLoading={isLoading}
-            />
-            <StatCard
-              title="People Detected"
-              value={peopleStats.count.toString()}
-              icon={Users}
-              trend={peopleStats.trend as "up" | "down" | "neutral"}
-              trendValue={peopleStats.trendValue}
-              isLoading={isLoading}
-            />
-            <StatCard
-              title="Recording Hours"
-              value={recordingHours.toString()}
-              icon={Clock}
-              description="Total hours recorded today"
-              isLoading={isLoading}
+              showToggle={true}
+              isActive={agentActive}
+              onToggle={() => {
+                setAgentActive(!agentActive)
+                toast({
+                  title: `AI Agent ${!agentActive ? "Activated" : "Deactivated"}`,
+                  description: `The AI surveillance agent is now ${!agentActive ? "active" : "inactive"}`,
+                })
+              }}
             />
           </div>
 
@@ -124,10 +126,47 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Activity and System Status */}
+          {/* Recent Logs and Notifications */}
           <div className="grid gap-6 md:grid-cols-2">
             <ActivityLog items={activityItems} className="h-[400px]" isLoading={isLoading} />
-            <SystemStatus className="h-[400px]" isLoading={isLoading} />
+            <Card className="h-[400px] rounded-xl border bg-card shadow-subtle">
+              <div className="flex items-center justify-between border-b p-4">
+                <h3 className="font-semibold">Notifications</h3>
+                <div className="flex items-center gap-2">
+                  <Badge variant="outline" className="ml-auto">
+                    {isLoading ? "..." : "0 unread"}
+                  </Badge>
+                  <Button variant="ghost" size="sm" onClick={() => router.push("/notifications")}>
+                    View All
+                  </Button>
+                </div>
+              </div>
+              <ScrollArea className="h-[calc(100%-56px)]">
+                <div className="p-4">
+                  {isLoading ? (
+                    // Loading skeletons
+                    Array(5)
+                      .fill(0)
+                      .map((_, index) => (
+                        <div key={index} className="mb-4 flex items-start gap-3 last:mb-0">
+                          <Skeleton className="mt-1 h-2 w-2 rounded-full" />
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between">
+                              <Skeleton className="h-4 w-32" />
+                              <Skeleton className="h-3 w-16" />
+                            </div>
+                            <Skeleton className="mt-1 h-3 w-24" />
+                          </div>
+                        </div>
+                      ))
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-8 text-center">
+                      <p className="text-muted-foreground">No notifications available</p>
+                    </div>
+                  )}
+                </div>
+              </ScrollArea>
+            </Card>
           </div>
         </main>
       </SidebarInset>

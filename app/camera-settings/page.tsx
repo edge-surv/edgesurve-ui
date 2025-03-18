@@ -3,12 +3,81 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { PlusCircle, Edit, Trash2, MoreHorizontal, Settings, Eye } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { ScrollArea } from "@/components/ui/scroll-area"
+
+// Sample camera data
+const cameras = [
+  {
+    id: "cam-001",
+    name: "Front Entrance",
+    provider: "Hikvision",
+    ipAddress: "192.168.1.101",
+    status: "online",
+    resolution: "1080p",
+    location: "Main Building",
+    lastMaintenance: "2025-02-15",
+  },
+  {
+    id: "cam-002",
+    name: "Parking Lot",
+    provider: "Dahua",
+    ipAddress: "192.168.1.102",
+    status: "online",
+    resolution: "4K",
+    location: "North Side",
+    lastMaintenance: "2025-01-20",
+  },
+  {
+    id: "cam-003",
+    name: "Reception Area",
+    provider: "Axis",
+    ipAddress: "192.168.1.103",
+    status: "online",
+    resolution: "1080p",
+    location: "Main Building",
+    lastMaintenance: "2025-03-01",
+  },
+  {
+    id: "cam-004",
+    name: "Back Door",
+    provider: "Hikvision",
+    ipAddress: "192.168.1.104",
+    status: "online",
+    resolution: "1080p",
+    location: "Warehouse",
+    lastMaintenance: "2025-02-10",
+  },
+  {
+    id: "cam-005",
+    name: "Loading Dock",
+    provider: "Dahua",
+    ipAddress: "192.168.1.105",
+    status: "offline",
+    resolution: "1080p",
+    location: "Warehouse",
+    lastMaintenance: "2025-01-15",
+  },
+  {
+    id: "cam-006",
+    name: "Server Room",
+    provider: "Axis",
+    ipAddress: "192.168.1.106",
+    status: "online",
+    resolution: "1080p",
+    location: "IT Department",
+    lastMaintenance: "2025-02-28",
+  },
+]
 
 export default function CameraSettingsPage() {
   return (
@@ -28,258 +97,99 @@ export default function CameraSettingsPage() {
           </div>
         </header>
         <main className="animate-fade-in flex flex-1 flex-col gap-6 p-6">
-          <Tabs defaultValue="general" className="w-full">
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="general">General</TabsTrigger>
-              <TabsTrigger value="recording">Recording</TabsTrigger>
-              <TabsTrigger value="motion">Motion Detection</TabsTrigger>
-              <TabsTrigger value="advanced">Advanced</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="general" className="mt-6 space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Camera Selection</CardTitle>
-                  <CardDescription>Select a camera to configure its settings</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4">
-                    <div className="grid grid-cols-4 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="camera">Camera</Label>
-                        <Select defaultValue="front-entrance">
-                          <SelectTrigger id="camera">
-                            <SelectValue placeholder="Select camera" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="front-entrance">Front Entrance</SelectItem>
-                            <SelectItem value="parking-lot">Parking Lot</SelectItem>
-                            <SelectItem value="reception">Reception Area</SelectItem>
-                            <SelectItem value="back-door">Back Door</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="status">Status</Label>
-                        <Select defaultValue="enabled">
-                          <SelectTrigger id="status">
-                            <SelectValue placeholder="Select status" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="enabled">Enabled</SelectItem>
-                            <SelectItem value="disabled">Disabled</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="resolution">Resolution</Label>
-                        <Select defaultValue="1080p">
-                          <SelectTrigger id="resolution">
-                            <SelectValue placeholder="Select resolution" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="720p">720p</SelectItem>
-                            <SelectItem value="1080p">1080p</SelectItem>
-                            <SelectItem value="4k">4K</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="fps">Frame Rate (FPS)</Label>
-                        <Select defaultValue="30">
-                          <SelectTrigger id="fps">
-                            <SelectValue placeholder="Select FPS" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="15">15 FPS</SelectItem>
-                            <SelectItem value="30">30 FPS</SelectItem>
-                            <SelectItem value="60">60 FPS</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Camera Name</Label>
-                      <Input id="name" defaultValue="Front Entrance Camera" />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="location">Location</Label>
-                      <Input id="location" defaultValue="Main Building" />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="flex items-center space-x-2">
-                        <Switch id="audio" defaultChecked />
-                        <Label htmlFor="audio">Enable Audio</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Switch id="night-vision" defaultChecked />
-                        <Label htmlFor="night-vision">Night Vision</Label>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-between">
-                  <Button variant="outline">Reset</Button>
-                  <Button>Save Changes</Button>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="recording" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recording Settings</CardTitle>
-                  <CardDescription>Configure how your cameras record footage</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="recording-mode">Recording Mode</Label>
-                      <Select defaultValue="continuous">
-                        <SelectTrigger id="recording-mode">
-                          <SelectValue placeholder="Select mode" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="continuous">Continuous</SelectItem>
-                          <SelectItem value="motion">Motion Triggered</SelectItem>
-                          <SelectItem value="scheduled">Scheduled</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="storage-location">Storage Location</Label>
-                      <Select defaultValue="local">
-                        <SelectTrigger id="storage-location">
-                          <SelectValue placeholder="Select location" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="local">Local Storage</SelectItem>
-                          <SelectItem value="cloud">Cloud Storage</SelectItem>
-                          <SelectItem value="nas">NAS</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="retention">Retention Period (Days)</Label>
-                    <Input id="retention" type="number" defaultValue="30" />
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Switch id="overwrite" defaultChecked />
-                    <Label htmlFor="overwrite">Overwrite oldest recordings when storage is full</Label>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-between">
-                  <Button variant="outline">Reset</Button>
-                  <Button>Save Changes</Button>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="motion" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Motion Detection</CardTitle>
-                  <CardDescription>Configure motion detection sensitivity and zones</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="sensitivity">Sensitivity</Label>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-sm text-muted-foreground">Low</span>
-                      <Input id="sensitivity" type="range" className="w-full" />
-                      <span className="text-sm text-muted-foreground">High</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Switch id="notifications" defaultChecked />
-                    <Label htmlFor="notifications">Send notifications on motion detection</Label>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Switch id="record-motion" defaultChecked />
-                    <Label htmlFor="record-motion">Record on motion detection</Label>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Motion Detection Zones</Label>
-                    <div className="aspect-video rounded-md border bg-muted p-2 flex items-center justify-center">
-                      <p className="text-sm text-muted-foreground">Motion zone editor would appear here</p>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-between">
-                  <Button variant="outline">Reset</Button>
-                  <Button>Save Changes</Button>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="advanced" className="mt-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Advanced Settings</CardTitle>
-                  <CardDescription>Configure advanced camera settings</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="bitrate">Bitrate (Mbps)</Label>
-                      <Input id="bitrate" type="number" defaultValue="4" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="codec">Video Codec</Label>
-                      <Select defaultValue="h264">
-                        <SelectTrigger id="codec">
-                          <SelectValue placeholder="Select codec" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="h264">H.264</SelectItem>
-                          <SelectItem value="h265">H.265</SelectItem>
-                          <SelectItem value="mjpeg">MJPEG</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="brightness">Brightness</Label>
-                      <Input id="brightness" type="range" className="w-full" defaultValue="50" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="contrast">Contrast</Label>
-                      <Input id="contrast" type="range" className="w-full" defaultValue="50" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="saturation">Saturation</Label>
-                      <Input id="saturation" type="range" className="w-full" defaultValue="50" />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Switch id="wdr" defaultChecked />
-                    <Label htmlFor="wdr">Wide Dynamic Range (WDR)</Label>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Switch id="dnr" defaultChecked />
-                    <Label htmlFor="dnr">Digital Noise Reduction</Label>
-                  </div>
-                </CardContent>
-                <CardFooter className="flex justify-between">
-                  <Button variant="outline">Reset</Button>
-                  <Button>Save Changes</Button>
-                </CardFooter>
-              </Card>
-            </TabsContent>
-          </Tabs>
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle>Camera Management</CardTitle>
+                <CardDescription>View and manage all connected cameras</CardDescription>
+              </div>
+              <Button className="gap-2">
+                <PlusCircle className="h-4 w-4" />
+                Add Camera
+              </Button>
+            </CardHeader>
+            <CardContent>
+              <ScrollArea className="h-[calc(100vh-280px)]">
+                <div className="rounded-md border">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b bg-muted/50">
+                        <th className="p-3 text-left font-medium">Camera Name</th>
+                        <th className="p-3 text-left font-medium hidden md:table-cell">Provider</th>
+                        <th className="p-3 text-left font-medium">IP Address</th>
+                        <th className="p-3 text-left font-medium hidden md:table-cell">Resolution</th>
+                        <th className="p-3 text-left font-medium hidden lg:table-cell">Location</th>
+                        <th className="p-3 text-left font-medium">Status</th>
+                        <th className="p-3 text-right font-medium">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {cameras.map((camera) => (
+                        <tr key={camera.id} className="border-b hover:bg-muted/50">
+                          <td className="p-3">{camera.name}</td>
+                          <td className="p-3 hidden md:table-cell">{camera.provider}</td>
+                          <td className="p-3">{camera.ipAddress}</td>
+                          <td className="p-3 hidden md:table-cell">{camera.resolution}</td>
+                          <td className="p-3 hidden lg:table-cell">{camera.location}</td>
+                          <td className="p-3">
+                            <Badge
+                              variant="outline"
+                              className={`gap-1 ${
+                                camera.status === "online"
+                                  ? "border-green-500 text-green-600 dark:text-green-400"
+                                  : "border-red-500 text-red-600 dark:text-red-400"
+                              }`}
+                            >
+                              <span
+                                className={`h-2 w-2 rounded-full ${
+                                  camera.status === "online" ? "bg-green-500" : "bg-red-500"
+                                }`}
+                              ></span>
+                              {camera.status === "online" ? "Online" : "Offline"}
+                            </Badge>
+                          </td>
+                          <td className="p-3 text-right">
+                            <div className="flex items-center justify-end gap-2">
+                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                                    <MoreHorizontal className="h-4 w-4" />
+                                  </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                  <DropdownMenuLabel>Camera Actions</DropdownMenuLabel>
+                                  <DropdownMenuSeparator />
+                                  <DropdownMenuItem>
+                                    <Settings className="mr-2 h-4 w-4" />
+                                    Configure
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem>
+                                    <Eye className="mr-2 h-4 w-4" />
+                                    View Livestream
+                                  </DropdownMenuItem>
+                                  <DropdownMenuSeparator />
+                                  <DropdownMenuItem className="text-red-600">
+                                    <Trash2 className="mr-2 h-4 w-4" />
+                                    Delete
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </ScrollArea>
+            </CardContent>
+          </Card>
         </main>
       </SidebarInset>
     </SidebarProvider>
