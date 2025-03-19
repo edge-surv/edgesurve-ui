@@ -1,16 +1,41 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { Separator } from "@/components/ui/separator"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { User, RefreshCw, Camera, Settings, Bot, Network } from "lucide-react"
-import { Checkbox } from "@/components/ui/checkbox"
+import { AppSidebar } from "@/components/app-sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  User,
+  RefreshCw,
+  Camera,
+  Settings,
+  Bot,
+  Network,
+  LogOut,
+} from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function SettingsPage() {
   return (
@@ -30,24 +55,41 @@ export default function SettingsPage() {
               <div className="mr-6 w-[200px] shrink-0">
                 <TabsList className="flex h-auto w-full flex-col items-start justify-start rounded-none bg-transparent p-0">
                   <div className="flex w-full flex-col gap-1">
-                    <div className="text-sm font-medium text-muted-foreground mb-2">Settings</div>
-                    <TabsTrigger value="user" className="w-full justify-start rounded-md px-3 py-2 text-sm">
+                    <div className="text-sm font-medium text-muted-foreground mb-2">
+                      Settings
+                    </div>
+                    <TabsTrigger
+                      value="user"
+                      className="w-full justify-start rounded-md px-3 py-2 text-sm"
+                    >
                       <User className="mr-2 h-4 w-4 text-blue-500" />
                       User Settings
                     </TabsTrigger>
-                    <TabsTrigger value="camera" className="w-full justify-start rounded-md px-3 py-2 text-sm">
+                    <TabsTrigger
+                      value="camera"
+                      className="w-full justify-start rounded-md px-3 py-2 text-sm"
+                    >
                       <Camera className="mr-2 h-4 w-4 text-green-500" />
                       Camera Settings
                     </TabsTrigger>
-                    <TabsTrigger value="system" className="w-full justify-start rounded-md px-3 py-2 text-sm">
+                    <TabsTrigger
+                      value="system"
+                      className="w-full justify-start rounded-md px-3 py-2 text-sm"
+                    >
                       <Settings className="mr-2 h-4 w-4 text-teal-500" />
                       System Settings
                     </TabsTrigger>
-                    <TabsTrigger value="ai-agent" className="w-full justify-start rounded-md px-3 py-2 text-sm">
+                    <TabsTrigger
+                      value="ai-agent"
+                      className="w-full justify-start rounded-md px-3 py-2 text-sm"
+                    >
                       <Bot className="mr-2 h-4 w-4 text-purple-500" />
                       AI Agent
                     </TabsTrigger>
-                    <TabsTrigger value="iot" className="w-full justify-start rounded-md px-3 py-2 text-sm">
+                    <TabsTrigger
+                      value="iot"
+                      className="w-full justify-start rounded-md px-3 py-2 text-sm"
+                    >
                       <Network className="mr-2 h-4 w-4 text-amber-500" />
                       IoT Integration
                     </TabsTrigger>
@@ -60,13 +102,18 @@ export default function SettingsPage() {
                   <Card>
                     <CardHeader>
                       <CardTitle>User Settings</CardTitle>
-                      <CardDescription>Manage your account information</CardDescription>
+                      <CardDescription>
+                        Manage your account information
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <div className="flex flex-col gap-6 sm:flex-row">
                         <div className="flex flex-col items-center gap-4">
                           <Avatar className="h-24 w-24">
-                            <AvatarImage src="/placeholder.svg?height=96&width=96" alt="User" />
+                            <AvatarImage
+                              src="/placeholder.svg?height=96&width=96"
+                              alt="User"
+                            />
                             <AvatarFallback>AD</AvatarFallback>
                           </Avatar>
                           <Button variant="outline" size="sm">
@@ -86,11 +133,19 @@ export default function SettingsPage() {
                           </div>
                           <div className="space-y-2">
                             <Label htmlFor="email">Email</Label>
-                            <Input id="email" type="email" defaultValue="admin@edgesurv.com" />
+                            <Input
+                              id="email"
+                              type="email"
+                              defaultValue="admin@edgesurv.com"
+                            />
                           </div>
                           <div className="space-y-2">
                             <Label htmlFor="phone">Phone Number</Label>
-                            <Input id="phone" type="tel" defaultValue="+1 (555) 123-4567" />
+                            <Input
+                              id="phone"
+                              type="tel"
+                              defaultValue="+1 (555) 123-4567"
+                            />
                           </div>
                         </div>
                       </div>
@@ -121,10 +176,16 @@ export default function SettingsPage() {
                                 <SelectValue placeholder="Select timezone" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="utc-8">Pacific Time (UTC-8)</SelectItem>
-                                <SelectItem value="utc-5">Eastern Time (UTC-5)</SelectItem>
+                                <SelectItem value="utc-8">
+                                  Pacific Time (UTC-8)
+                                </SelectItem>
+                                <SelectItem value="utc-5">
+                                  Eastern Time (UTC-5)
+                                </SelectItem>
                                 <SelectItem value="utc+0">UTC</SelectItem>
-                                <SelectItem value="utc+1">Central European Time (UTC+1)</SelectItem>
+                                <SelectItem value="utc+1">
+                                  Central European Time (UTC+1)
+                                </SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
@@ -136,9 +197,15 @@ export default function SettingsPage() {
                               <SelectValue placeholder="Select date format" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="mm-dd-yyyy">MM/DD/YYYY</SelectItem>
-                              <SelectItem value="dd-mm-yyyy">DD/MM/YYYY</SelectItem>
-                              <SelectItem value="yyyy-mm-dd">YYYY/MM/DD</SelectItem>
+                              <SelectItem value="mm-dd-yyyy">
+                                MM/DD/YYYY
+                              </SelectItem>
+                              <SelectItem value="dd-mm-yyyy">
+                                DD/MM/YYYY
+                              </SelectItem>
+                              <SelectItem value="yyyy-mm-dd">
+                                YYYY/MM/DD
+                              </SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -156,26 +223,38 @@ export default function SettingsPage() {
                   <Card>
                     <CardHeader>
                       <CardTitle>Camera Settings</CardTitle>
-                      <CardDescription>Configure camera details and parameters</CardDescription>
+                      <CardDescription>
+                        Configure camera details and parameters
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         <div className="space-y-2">
                           <Label htmlFor="camera-name">Camera Name</Label>
-                          <Input id="camera-name" placeholder="e.g., Front Entrance" />
+                          <Input
+                            id="camera-name"
+                            placeholder="e.g., Front Entrance"
+                          />
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="camera-location">Location</Label>
-                          <Input id="camera-location" placeholder="e.g., Main Building" />
+                          <Input
+                            id="camera-location"
+                            placeholder="e.g., Main Building"
+                          />
                         </div>
                         <div className="space-y-2">
-                          <Label htmlFor="camera-provider">Provider/Manufacturer</Label>
+                          <Label htmlFor="camera-provider">
+                            Provider/Manufacturer
+                          </Label>
                           <Select>
                             <SelectTrigger id="camera-provider">
                               <SelectValue placeholder="Select provider" />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="hikvision">Hikvision</SelectItem>
+                              <SelectItem value="hikvision">
+                                Hikvision
+                              </SelectItem>
                               <SelectItem value="dahua">Dahua</SelectItem>
                               <SelectItem value="axis">Axis</SelectItem>
                               <SelectItem value="other">Other</SelectItem>
@@ -184,7 +263,10 @@ export default function SettingsPage() {
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="camera-ip">IP Address</Label>
-                          <Input id="camera-ip" placeholder="e.g., 192.168.1.100" />
+                          <Input
+                            id="camera-ip"
+                            placeholder="e.g., 192.168.1.100"
+                          />
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="camera-resolution">Resolution</Label>
@@ -202,11 +284,18 @@ export default function SettingsPage() {
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="camera-username">Username</Label>
-                          <Input id="camera-username" placeholder="Camera username" />
+                          <Input
+                            id="camera-username"
+                            placeholder="Camera username"
+                          />
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="camera-password">Password</Label>
-                          <Input id="camera-password" type="password" placeholder="Camera password" />
+                          <Input
+                            id="camera-password"
+                            type="password"
+                            placeholder="Camera password"
+                          />
                         </div>
                         <div className="space-y-2">
                           <Label htmlFor="camera-port">Port</Label>
@@ -220,15 +309,21 @@ export default function SettingsPage() {
                         <h3 className="text-lg font-medium">Camera Features</h3>
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                           <div className="flex items-center justify-between">
-                            <Label htmlFor="motion-detection">Motion Detection</Label>
+                            <Label htmlFor="motion-detection">
+                              Motion Detection
+                            </Label>
                             <Switch id="motion-detection" />
                           </div>
                           <div className="flex items-center justify-between">
-                            <Label htmlFor="person-detection">Person Detection</Label>
+                            <Label htmlFor="person-detection">
+                              Person Detection
+                            </Label>
                             <Switch id="person-detection" />
                           </div>
                           <div className="flex items-center justify-between">
-                            <Label htmlFor="audio-recording">Audio Recording</Label>
+                            <Label htmlFor="audio-recording">
+                              Audio Recording
+                            </Label>
                             <Switch id="audio-recording" />
                           </div>
                           <div className="flex items-center justify-between">
@@ -241,25 +336,41 @@ export default function SettingsPage() {
                       <Separator />
 
                       <div className="space-y-4">
-                        <h3 className="text-lg font-medium">Recording Settings</h3>
+                        <h3 className="text-lg font-medium">
+                          Recording Settings
+                        </h3>
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                           <div className="space-y-2">
-                            <Label htmlFor="recording-mode">Recording Mode</Label>
+                            <Label htmlFor="recording-mode">
+                              Recording Mode
+                            </Label>
                             <Select>
                               <SelectTrigger id="recording-mode">
                                 <SelectValue placeholder="Select mode" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="continuous">Continuous</SelectItem>
-                                <SelectItem value="motion">Motion-triggered</SelectItem>
-                                <SelectItem value="scheduled">Scheduled</SelectItem>
+                                <SelectItem value="continuous">
+                                  Continuous
+                                </SelectItem>
+                                <SelectItem value="motion">
+                                  Motion-triggered
+                                </SelectItem>
+                                <SelectItem value="scheduled">
+                                  Scheduled
+                                </SelectItem>
                                 <SelectItem value="manual">Manual</SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
                           <div className="space-y-2">
-                            <Label htmlFor="retention-period">Retention Period (Days)</Label>
-                            <Input id="retention-period" type="number" defaultValue="30" />
+                            <Label htmlFor="retention-period">
+                              Retention Period (Days)
+                            </Label>
+                            <Input
+                              id="retention-period"
+                              type="number"
+                              defaultValue="30"
+                            />
                           </div>
                         </div>
                       </div>
@@ -276,19 +387,29 @@ export default function SettingsPage() {
                   <Card>
                     <CardHeader>
                       <CardTitle>System Settings</CardTitle>
-                      <CardDescription>Configure general system preferences</CardDescription>
+                      <CardDescription>
+                        Configure general system preferences
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <div className="space-y-4">
-                        <h3 className="text-lg font-medium">System Information</h3>
+                        <h3 className="text-lg font-medium">
+                          System Information
+                        </h3>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <p className="text-sm font-medium">System Version</p>
-                            <p className="text-sm text-muted-foreground">EdgeSurv v1.0.0</p>
+                            <p className="text-sm font-medium">
+                              System Version
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              EdgeSurv v1.0.0
+                            </p>
                           </div>
                           <div>
                             <p className="text-sm font-medium">Last Updated</p>
-                            <p className="text-sm text-muted-foreground">March 12, 2025</p>
+                            <p className="text-sm text-muted-foreground">
+                              March 12, 2025
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -296,25 +417,37 @@ export default function SettingsPage() {
                       <Separator />
 
                       <div className="space-y-4">
-                        <h3 className="text-lg font-medium">License Information</h3>
+                        <h3 className="text-lg font-medium">
+                          License Information
+                        </h3>
                         <div className="space-y-2">
                           <Label htmlFor="license-key">License Key</Label>
                           <div className="flex gap-2">
-                            <Input id="license-key" placeholder="Enter your license key" />
+                            <Input
+                              id="license-key"
+                              placeholder="Enter your license key"
+                            />
                             <Button>Activate</Button>
                           </div>
                           <p className="text-xs text-muted-foreground">
-                            Enter your license key to activate all features of EdgeSurv
+                            Enter your license key to activate all features of
+                            EdgeSurv
                           </p>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
                             <p className="text-sm font-medium">License Type</p>
-                            <p className="text-sm text-muted-foreground">Professional Edition</p>
+                            <p className="text-sm text-muted-foreground">
+                              Professional Edition
+                            </p>
                           </div>
                           <div>
-                            <p className="text-sm font-medium">License Expires</p>
-                            <p className="text-sm text-muted-foreground">December 31, 2025</p>
+                            <p className="text-sm font-medium">
+                              License Expires
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              December 31, 2025
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -325,7 +458,9 @@ export default function SettingsPage() {
                         <h3 className="text-lg font-medium">System Updates</h3>
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
-                            <Label htmlFor="auto-update">Automatic Updates</Label>
+                            <Label htmlFor="auto-update">
+                              Automatic Updates
+                            </Label>
                             <Switch id="auto-update" defaultChecked />
                           </div>
                         </div>
@@ -337,7 +472,9 @@ export default function SettingsPage() {
                                 <SelectValue placeholder="Select patch version" />
                               </SelectTrigger>
                               <SelectContent>
-                                <SelectItem value="latest">Latest (v1.0.5)</SelectItem>
+                                <SelectItem value="latest">
+                                  Latest (v1.0.5)
+                                </SelectItem>
                                 <SelectItem value="1.0.4">v1.0.4</SelectItem>
                                 <SelectItem value="1.0.3">v1.0.3</SelectItem>
                                 <SelectItem value="1.0.2">v1.0.2</SelectItem>
@@ -355,7 +492,9 @@ export default function SettingsPage() {
                       <Separator />
 
                       <div className="space-y-4">
-                        <h3 className="text-lg font-medium">System Preferences</h3>
+                        <h3 className="text-lg font-medium">
+                          System Preferences
+                        </h3>
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
                             <Label htmlFor="analytics">Share Analytics</Label>
@@ -368,8 +507,14 @@ export default function SettingsPage() {
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="retention">Default Retention Period (Days)</Label>
-                          <Input id="retention" type="number" defaultValue="30" />
+                          <Label htmlFor="retention">
+                            Default Retention Period (Days)
+                          </Label>
+                          <Input
+                            id="retention"
+                            type="number"
+                            defaultValue="30"
+                          />
                         </div>
 
                         <div className="space-y-2">
@@ -381,7 +526,9 @@ export default function SettingsPage() {
                             <SelectContent>
                               <SelectItem value="light">Light</SelectItem>
                               <SelectItem value="dark">Dark</SelectItem>
-                              <SelectItem value="system">System Default</SelectItem>
+                              <SelectItem value="system">
+                                System Default
+                              </SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
@@ -398,7 +545,9 @@ export default function SettingsPage() {
                   <Card>
                     <CardHeader>
                       <CardTitle>AI Agent</CardTitle>
-                      <CardDescription>Configure AI surveillance agent</CardDescription>
+                      <CardDescription>
+                        Configure AI surveillance agent
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="flex items-center justify-between">
@@ -459,11 +608,15 @@ export default function SettingsPage() {
                   <Card>
                     <CardHeader>
                       <CardTitle>IoT Integration</CardTitle>
-                      <CardDescription>Connect with IoT devices</CardDescription>
+                      <CardDescription>
+                        Connect with IoT devices
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <Label htmlFor="iot-enabled">Enable IoT Integration</Label>
+                        <Label htmlFor="iot-enabled">
+                          Enable IoT Integration
+                        </Label>
                         <Switch id="iot-enabled" />
                       </div>
                       <div className="space-y-2">
@@ -482,7 +635,10 @@ export default function SettingsPage() {
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="iot-server">Server Address</Label>
-                        <Input id="iot-server" placeholder="e.g., mqtt://iot.example.com" />
+                        <Input
+                          id="iot-server"
+                          placeholder="e.g., mqtt://iot.example.com"
+                        />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="iot-auth">Authentication</Label>
@@ -510,6 +666,5 @@ export default function SettingsPage() {
         </main>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }
-

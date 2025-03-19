@@ -1,22 +1,22 @@
-"use client"
+"use client";
 
-import type { LucideIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Skeleton } from "@/components/ui/skeleton"
+import type { LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface StatCardProps {
-  title: string
-  value: string | number
-  description?: string
-  icon?: LucideIcon
-  trend?: "up" | "down" | "neutral"
-  trendValue?: string
-  className?: string
-  isLoading?: boolean
-  onClick?: () => void
-  showToggle?: boolean
-  isActive?: boolean
-  onToggle?: () => void
+  title: string;
+  value: string | number;
+  description?: string;
+  icon?: LucideIcon;
+  trend?: "up" | "down" | "neutral";
+  trendValue?: string;
+  className?: string;
+  isLoading?: boolean;
+  onClick?: () => void;
+  showToggle?: boolean;
+  isActive?: boolean;
+  onToggle?: () => void;
 }
 
 export function StatCard({
@@ -38,7 +38,7 @@ export function StatCard({
       className={cn(
         "relative overflow-hidden rounded-xl border bg-card p-6 shadow-subtle transition-all hover:shadow-elevated",
         onClick && "cursor-pointer",
-        className,
+        className
       )}
       onClick={onClick}
     >
@@ -49,25 +49,35 @@ export function StatCard({
             {showToggle && (
               <button
                 onClick={(e) => {
-                  e.stopPropagation()
-                  onToggle?.()
+                  e.stopPropagation();
+                  onToggle?.();
                 }}
                 className={cn(
                   "ml-2 rounded-full w-12 h-6 flex items-center transition-colors",
-                  isActive ? "bg-green-500 justify-end" : "bg-gray-300 justify-start",
+                  isActive
+                    ? "bg-green-500 justify-end"
+                    : "bg-gray-300 justify-start"
                 )}
               >
                 <span
                   className={cn(
                     "h-5 w-5 rounded-full transform transition-transform",
-                    isActive ? "bg-white translate-x-[-4px]" : "bg-white translate-x-[4px]",
+                    isActive
+                      ? "bg-white translate-x-[-4px]"
+                      : "bg-white translate-x-[4px]"
                   )}
                 ></span>
               </button>
             )}
           </div>
-          {isLoading ? <Skeleton className="mt-2 h-8 w-16" /> : <h3 className="mt-2 text-3xl font-bold">{value}</h3>}
-          {description && <p className="mt-1 text-xs text-muted-foreground">{description}</p>}
+          {isLoading ? (
+            <Skeleton className="mt-2 h-8 w-16" />
+          ) : (
+            <h3 className="mt-2 text-3xl font-bold">{value}</h3>
+          )}
+          {description && (
+            <p className="mt-1 text-xs text-muted-foreground">{description}</p>
+          )}
           {trend &&
             trendValue &&
             (isLoading ? (
@@ -77,14 +87,11 @@ export function StatCard({
                 <span
                   className={cn(
                     "inline-flex items-center rounded-full px-2 py-1 text-xs font-medium",
-                    trend === "up" && "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
-                    trend === "down" && "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
-                    trend === "neutral" && "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
+                    trend === "up" &&
+                      "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
                   )}
                 >
-                  {trend === "up" && "↑"}
-                  {trend === "down" && "↓"}
-                  {trend === "neutral" && "→"} {trendValue}
+                  All Cameras Active
                 </span>
               </div>
             ))}
@@ -99,6 +106,5 @@ export function StatCard({
           ))}
       </div>
     </div>
-  )
+  );
 }
-

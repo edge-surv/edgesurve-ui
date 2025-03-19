@@ -1,10 +1,27 @@
-import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { Separator } from "@/components/ui/separator"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { PlusCircle, Edit, Trash2, MoreHorizontal, Settings, Eye } from "lucide-react"
+import { AppSidebar } from "@/components/app-sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  PlusCircle,
+  Edit,
+  Trash2,
+  MoreHorizontal,
+  Settings,
+  Eye,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,8 +29,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { ScrollArea } from "@/components/ui/scroll-area"
+} from "@/components/ui/dropdown-menu";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Sample camera data
 const cameras = [
@@ -77,7 +94,7 @@ const cameras = [
     location: "IT Department",
     lastMaintenance: "2025-02-28",
   },
-]
+];
 
 export default function CameraSettingsPage() {
   return (
@@ -91,7 +108,8 @@ export default function CameraSettingsPage() {
             <h1 className="text-xl font-semibold">Camera</h1>
             <div className="flex items-center gap-2">
               <Badge variant="outline" className="gap-1">
-                <span className="h-2 w-2 rounded-full bg-green-500"></span> 12 Cameras Configured
+                <span className="h-2 w-2 rounded-full bg-green-500"></span> 12
+                Cameras Configured
               </Badge>
             </div>
           </div>
@@ -101,10 +119,12 @@ export default function CameraSettingsPage() {
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
                 <CardTitle>Camera Management</CardTitle>
-                <CardDescription>View and manage all connected cameras</CardDescription>
+                <CardDescription>
+                  View and manage all connected cameras
+                </CardDescription>
               </div>
               <Button className="gap-2">
-                <PlusCircle className="h-4 w-4 text-green-500" />
+                <PlusCircle className="h-4 w-4" />
                 Add Camera
               </Button>
             </CardHeader>
@@ -114,23 +134,42 @@ export default function CameraSettingsPage() {
                   <table className="w-full">
                     <thead>
                       <tr className="border-b bg-muted/50">
-                        <th className="p-3 text-left font-medium">Camera Name</th>
-                        <th className="p-3 text-left font-medium hidden md:table-cell">Provider</th>
-                        <th className="p-3 text-left font-medium">IP Address</th>
-                        <th className="p-3 text-left font-medium hidden md:table-cell">Resolution</th>
-                        <th className="p-3 text-left font-medium hidden lg:table-cell">Location</th>
+                        <th className="p-3 text-left font-medium">
+                          Camera Name
+                        </th>
+                        <th className="p-3 text-left font-medium hidden md:table-cell">
+                          Provider
+                        </th>
+                        <th className="p-3 text-left font-medium">
+                          IP Address
+                        </th>
+                        <th className="p-3 text-left font-medium hidden md:table-cell">
+                          Resolution
+                        </th>
+                        <th className="p-3 text-left font-medium hidden lg:table-cell">
+                          Location
+                        </th>
                         <th className="p-3 text-left font-medium">Status</th>
                         <th className="p-3 text-right font-medium">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
                       {cameras.map((camera) => (
-                        <tr key={camera.id} className="border-b hover:bg-muted/50">
+                        <tr
+                          key={camera.id}
+                          className="border-b hover:bg-muted/50"
+                        >
                           <td className="p-3">{camera.name}</td>
-                          <td className="p-3 hidden md:table-cell">{camera.provider}</td>
+                          <td className="p-3 hidden md:table-cell">
+                            {camera.provider}
+                          </td>
                           <td className="p-3">{camera.ipAddress}</td>
-                          <td className="p-3 hidden md:table-cell">{camera.resolution}</td>
-                          <td className="p-3 hidden lg:table-cell">{camera.location}</td>
+                          <td className="p-3 hidden md:table-cell">
+                            {camera.resolution}
+                          </td>
+                          <td className="p-3 hidden lg:table-cell">
+                            {camera.location}
+                          </td>
                           <td className="p-3">
                             <Badge
                               variant="outline"
@@ -142,28 +181,46 @@ export default function CameraSettingsPage() {
                             >
                               <span
                                 className={`h-2 w-2 rounded-full ${
-                                  camera.status === "online" ? "bg-green-500" : "bg-red-500"
+                                  camera.status === "online"
+                                    ? "bg-green-500"
+                                    : "bg-red-500"
                                 }`}
                               ></span>
-                              {camera.status === "online" ? "Online" : "Offline"}
+                              {camera.status === "online"
+                                ? "Online"
+                                : "Offline"}
                             </Badge>
                           </td>
                           <td className="p-3 text-right">
                             <div className="flex items-center justify-end gap-2">
-                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8"
+                              >
                                 <Eye className="h-4 w-4 text-blue-500" />
                               </Button>
-                              <Button variant="ghost" size="icon" className="h-8 w-8">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8"
+                              >
                                 <Edit className="h-4 w-4 text-amber-500" />
                               </Button>
                               <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                  <Button variant="ghost" size="icon" className="h-8 w-8">
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-8 w-8"
+                                  >
                                     <MoreHorizontal className="h-4 w-4" />
                                   </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                  <DropdownMenuLabel>Camera Actions</DropdownMenuLabel>
+                                  <DropdownMenuLabel>
+                                    Camera Actions
+                                  </DropdownMenuLabel>
                                   <DropdownMenuSeparator />
                                   <DropdownMenuItem>
                                     <Settings className="mr-2 h-4 w-4 text-teal-500" />
@@ -193,6 +250,5 @@ export default function CameraSettingsPage() {
         </main>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }
-

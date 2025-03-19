@@ -1,56 +1,75 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Play, Volume2, Maximize, MoreVertical, Pause, VolumeX } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Skeleton } from "@/components/ui/skeleton"
+import { useState } from "react";
+import {
+  Play,
+  Volume2,
+  Maximize,
+  MoreVertical,
+  Pause,
+  VolumeX,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface CameraFeedProps {
-  title: string
-  location?: string
-  status?: "online" | "offline" | "recording"
-  imageUrl?: string
-  className?: string
-  isLoading?: boolean
-  onViewClick?: () => void
-  onSettingsClick?: () => void
+  id?: string;
+  host?: string;
+  port?: number;
+  name: string;
+  username?: string;
+  password?: string;
+  provider?: string;
+  status?: "online" | "offline" | "recording";
+  stream_url?: string;
+  location?: string;
+  className?: string;
+  isLoading?: boolean;
+  onViewClick?: () => void;
+  onSettingsClick?: () => void;
 }
 
 export function CameraFeed({
-  title,
+  id,
+  name,
   location,
   status = "online",
-  imageUrl = "/placeholder.svg?height=300&width=500",
+  stream_url = "/placeholder.svg?height=300&width=500",
   className,
   isLoading = false,
   onViewClick,
   onSettingsClick,
 }: CameraFeedProps) {
-  const [isPlaying, setIsPlaying] = useState(true)
-  const [isMuted, setIsMuted] = useState(false)
-  const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const handlePlayToggle = () => {
-    setIsPlaying(!isPlaying)
-  }
+    setIsPlaying(!isPlaying);
+  };
 
   const handleMuteToggle = () => {
-    setIsMuted(!isMuted)
-  }
+    setIsMuted(!isMuted);
+  };
 
   const handleFullscreenToggle = () => {
-    setIsFullscreen(!isFullscreen)
-    onViewClick?.()
-  }
+    setIsFullscreen(!isFullscreen);
+    onViewClick?.();
+  };
 
   return (
     <div
       className={cn(
         "group relative overflow-hidden rounded-xl border bg-card shadow-subtle transition-all hover:shadow-elevated h-full",
-        className,
+        className
       )}
     >
       {isLoading ? (
@@ -60,8 +79,8 @@ export function CameraFeed({
       ) : (
         <div className="relative aspect-video w-full overflow-hidden bg-black">
           <img
-            src={imageUrl || "/placeholder.svg"}
-            alt={`Camera feed: ${title}`}
+            src={stream_url || "/placeholder.svg"}
+            alt={`Camera feed: ${name}`}
             className="h-full w-full object-cover opacity-80"
           />
 
@@ -73,7 +92,7 @@ export function CameraFeed({
                   "absolute inline-flex h-full w-full rounded-full",
                   status === "online" && "bg-green-500",
                   status === "offline" && "bg-gray-500",
-                  status === "recording" && "bg-red-500",
+                  status === "recording" && "bg-red-500"
                 )}
               />
               {status === "online" && (
@@ -89,7 +108,7 @@ export function CameraFeed({
                 "bg-black/50 text-white backdrop-blur-sm",
                 status === "online" && "border-green-500",
                 status === "offline" && "border-gray-500",
-                status === "recording" && "border-red-500",
+                status === "recording" && "border-red-500"
               )}
             >
               {status === "online" && "Live"}
@@ -100,7 +119,7 @@ export function CameraFeed({
 
           {/* Camera info */}
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 text-white opacity-100 transition-opacity">
-            <h3 className="font-medium">{title}</h3>
+            <h3 className="font-medium">{name}</h3>
             {location && <p className="text-xs text-gray-300">{location}</p>}
           </div>
 
@@ -113,7 +132,11 @@ export function CameraFeed({
                 className="h-8 w-8 text-white hover:bg-white/20"
                 onClick={handlePlayToggle}
               >
-                {isPlaying ? <Pause className="h-4 w-4 text-red-400" /> : <Play className="h-4 w-4 text-green-400" />}
+                {isPlaying ? (
+                  <Pause className="h-4 w-4 text-red-400" />
+                ) : (
+                  <Play className="h-4 w-4 text-green-400" />
+                )}
               </Button>
               <Button
                 variant="ghost"
@@ -139,14 +162,24 @@ export function CameraFeed({
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-white/20">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-white hover:bg-white/20"
+                  >
                     <MoreVertical className="h-4 w-4 text-amber-400" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => alert("Screenshot taken")}>Take Screenshot</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => alert("Recording started")}>Start Recording</DropdownMenuItem>
-                  <DropdownMenuItem onClick={onSettingsClick}>Camera Settings</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => alert("Screenshot taken")}>
+                    Take Screenshot
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => alert("Recording started")}>
+                    Start Recording
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={onSettingsClick}>
+                    Camera Settings
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -154,6 +187,5 @@ export function CameraFeed({
         </div>
       )}
     </div>
-  )
+  );
 }
-
