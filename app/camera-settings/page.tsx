@@ -104,7 +104,7 @@ export default function CameraSettingsPage() {
                 <CardDescription>View and manage all connected cameras</CardDescription>
               </div>
               <Button className="gap-2">
-                <PlusCircle className="h-4 w-4" />
+                <PlusCircle className="h-4 w-4 text-green-500" />
                 Add Camera
               </Button>
             </CardHeader>
@@ -151,10 +151,10 @@ export default function CameraSettingsPage() {
                           <td className="p-3 text-right">
                             <div className="flex items-center justify-end gap-2">
                               <Button variant="ghost" size="icon" className="h-8 w-8">
-                                <Eye className="h-4 w-4" />
+                                <Eye className="h-4 w-4 text-blue-500" />
                               </Button>
                               <Button variant="ghost" size="icon" className="h-8 w-8">
-                                <Edit className="h-4 w-4" />
+                                <Edit className="h-4 w-4 text-amber-500" />
                               </Button>
                               <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
@@ -166,11 +166,11 @@ export default function CameraSettingsPage() {
                                   <DropdownMenuLabel>Camera Actions</DropdownMenuLabel>
                                   <DropdownMenuSeparator />
                                   <DropdownMenuItem>
-                                    <Settings className="mr-2 h-4 w-4" />
+                                    <Settings className="mr-2 h-4 w-4 text-teal-500" />
                                     Configure
                                   </DropdownMenuItem>
                                   <DropdownMenuItem>
-                                    <Eye className="mr-2 h-4 w-4" />
+                                    <Eye className="mr-2 h-4 w-4 text-blue-500" />
                                     View Livestream
                                   </DropdownMenuItem>
                                   <DropdownMenuSeparator />

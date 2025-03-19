@@ -28,7 +28,7 @@ export default function HelpPage() {
               </CardHeader>
               <CardContent>
                 <div className="relative">
-                  <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Search className="absolute left-3 top-3 h-4 w-4 text-blue-500" />
                   <Input placeholder="Search for help..." className="pl-10" />
                 </div>
               </CardContent>
@@ -58,7 +58,7 @@ export default function HelpPage() {
                   <Card key={index} className="cursor-pointer hover:bg-muted/50 transition-colors">
                     <CardHeader className="py-4">
                       <div className="flex items-start gap-4">
-                        <FileText className="h-6 w-6 text-primary" />
+                        <FileText className="h-6 w-6 text-blue-500" />
                         <div>
                           <CardTitle className="text-base">{guide.title}</CardTitle>
                           <CardDescription>{guide.description}</CardDescription>
@@ -129,7 +129,7 @@ export default function HelpPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <Card className="bg-muted/50">
                         <CardContent className="p-6 flex flex-col items-center text-center">
-                          <Phone className="h-10 w-10 text-primary mb-4" />
+                          <Phone className="h-10 w-10 text-blue-500 mb-4" />
                           <h3 className="font-medium mb-1">Phone Support</h3>
                           <p className="text-sm text-muted-foreground mb-4">Available 24/7 for urgent issues</p>
                           <Button variant="outline">+1 (800) 555-0123</Button>
@@ -138,7 +138,7 @@ export default function HelpPage() {
 
                       <Card className="bg-muted/50">
                         <CardContent className="p-6 flex flex-col items-center text-center">
-                          <Mail className="h-10 w-10 text-primary mb-4" />
+                          <Mail className="h-10 w-10 text-purple-500 mb-4" />
                           <h3 className="font-medium mb-1">Email Support</h3>
                           <p className="text-sm text-muted-foreground mb-4">Response within 24 hours</p>
                           <Button variant="outline">support@edgesurv.com</Button>

@@ -94,7 +94,7 @@ export function StatCard({
             <Skeleton className="h-12 w-12 rounded-full" />
           ) : (
             <div className="rounded-full bg-primary/10 p-3 text-primary dark:bg-primary/20">
-              <Icon className="h-6 w-6" />
+              <Icon className="h-6 w-6 text-primary" />
             </div>
           ))}
       </div>

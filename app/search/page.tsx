@@ -21,7 +21,6 @@ import {
   Settings,
 } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Checkbox } from "@/components/ui/checkbox"
 
@@ -59,11 +58,11 @@ export default function SearchPage() {
                 <CardContent className="space-y-4">
                   <div className="flex gap-4">
                     <div className="relative flex-1">
-                      <SearchIcon className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                      <SearchIcon className="absolute left-3 top-3 h-4 w-4 text-blue-500" />
                       <Input placeholder="Search logs..." className="pl-10" />
                     </div>
                     <Button variant="outline" className="gap-2">
-                      <Filter className="h-4 w-4" />
+                      <Filter className="h-4 w-4 text-purple-500" />
                       Filters
                     </Button>
                   </div>
@@ -73,11 +72,11 @@ export default function SearchPage() {
                       <Label>Date Range</Label>
                       <div className="flex gap-2">
                         <Button variant="outline" size="sm" className="w-full gap-2">
-                          <CalendarIcon className="h-4 w-4" />
+                          <CalendarIcon className="h-4 w-4 text-amber-500" />
                           Start Date
                         </Button>
                         <Button variant="outline" size="sm" className="w-full gap-2">
-                          <CalendarIcon className="h-4 w-4" />
+                          <CalendarIcon className="h-4 w-4 text-amber-500" />
                           End Date
                         </Button>
                       </div>
@@ -191,128 +190,123 @@ export default function SearchPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {/* AI-powered text search */}
-                  <div className="space-y-2">
-                    <Label>AI-Powered Video Search</Label>
-                    <div className="relative">
-                      <SearchIcon className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        placeholder="Describe what you're looking for... (e.g., 'person wearing red jacket near entrance')"
-                        className="pl-10"
-                      />
-                    </div>
-                    <p className="text-xs text-muted-foreground">
-                      Use natural language to describe objects, people, activities, or scenarios you want to find in the
-                      video footage.
-                    </p>
-                  </div>
+                  <div className="flex flex-col md:flex-row gap-4">
+                    {/* Main search section */}
+                    <div className="flex-1 space-y-4">
+                      {/* AI-powered text search */}
+                      <div className="space-y-2">
+                        <Label>AI-Powered Video Search</Label>
+                        <div className="relative">
+                          <SearchIcon className="absolute left-3 top-3 h-4 w-4 text-blue-500" />
+                          <Input
+                            placeholder="Describe what you're looking for... (e.g., 'person wearing red jacket near entrance')"
+                            className="pl-10"
+                          />
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          Use natural language to describe objects, people, activities, or scenarios you want to find in
+                          the video footage.
+                        </p>
+                      </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>Select Camera</Label>
-                      <Select defaultValue="front-entrance">
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select camera" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="front-entrance">Front Entrance</SelectItem>
-                          <SelectItem value="parking-lot">Parking Lot</SelectItem>
-                          <SelectItem value="reception">Reception Area</SelectItem>
-                          <SelectItem value="back-door">Back Door</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label>Select Camera</Label>
+                          <Select defaultValue="front-entrance">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select camera" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="front-entrance">Front Entrance</SelectItem>
+                              <SelectItem value="parking-lot">Parking Lot</SelectItem>
+                              <SelectItem value="reception">Reception Area</SelectItem>
+                              <SelectItem value="back-door">Back Door</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label>Date & Time Range</Label>
+                          <div className="flex flex-col gap-2">
+                            <div className="flex gap-2">
+                              <Button variant="outline" size="sm" className="w-full gap-2">
+                                <CalendarIcon className="h-4 w-4 text-amber-500" />
+                                Start Date
+                              </Button>
+                              <Button variant="outline" size="sm" className="w-full gap-2">
+                                <ClockIcon className="h-4 w-4 text-indigo-500" />
+                                Start Time
+                              </Button>
+                            </div>
+                            <div className="flex gap-2">
+                              <Button variant="outline" size="sm" className="w-full gap-2">
+                                <CalendarIcon className="h-4 w-4 text-amber-500" />
+                                End Date
+                              </Button>
+                              <Button variant="outline" size="sm" className="w-full gap-2">
+                                <ClockIcon className="h-4 w-4 text-indigo-500" />
+                                End Time
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label>Search For</Label>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                          <div className="flex items-center space-x-2">
+                            <Checkbox id="person" />
+                            <Label htmlFor="person" className="text-sm">
+                              Person
+                            </Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Checkbox id="vehicle" />
+                            <Label htmlFor="vehicle" className="text-sm">
+                              Vehicle
+                            </Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Checkbox id="animal" />
+                            <Label htmlFor="animal" className="text-sm">
+                              Animal
+                            </Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Checkbox id="motion" />
+                            <Label htmlFor="motion" className="text-sm">
+                              Motion
+                            </Label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-2">
+                        <Switch id="draw-boxes" />
+                        <Label htmlFor="draw-boxes">Highlight detected objects in results</Label>
+                      </div>
                     </div>
 
-                    <div className="space-y-2">
-                      <Label>Date & Time Range</Label>
-                      <div className="flex flex-col gap-2">
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm" className="w-full gap-2">
-                            <CalendarIcon className="h-4 w-4" />
-                            Start Date
-                          </Button>
-                          <Button variant="outline" size="sm" className="w-full gap-2">
-                            <ClockIcon className="h-4 w-4" />
-                            Start Time
+                    {/* Upload local video section - now a smaller sidebar */}
+                    <div className="md:w-64 space-y-3 p-3 border rounded-md bg-muted/10">
+                      <div className="flex items-center justify-between">
+                        <Label className="text-sm font-medium">Upload Local Video</Label>
+                        <Switch id="use-local-video" />
+                      </div>
+                      <div className="border border-dashed rounded-md p-3 text-center">
+                        <div className="flex flex-col items-center gap-2">
+                          <Upload className="h-5 w-5 text-blue-500" />
+                          <div>
+                            <p className="text-xs font-medium">Drop video file here</p>
+                            <p className="text-xs text-muted-foreground">MP4, AVI, MOV (max 500MB)</p>
+                          </div>
+                          <Button size="sm" variant="outline" className="mt-1 text-xs h-7 px-2">
+                            Browse
                           </Button>
                         </div>
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm" className="w-full gap-2">
-                            <CalendarIcon className="h-4 w-4" />
-                            End Date
-                          </Button>
-                          <Button variant="outline" size="sm" className="w-full gap-2">
-                            <ClockIcon className="h-4 w-4" />
-                            End Time
-                          </Button>
-                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="border-t pt-4 mt-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <Label>Upload Local Video</Label>
-                      <Switch id="use-local-video" />
-                    </div>
-                    <div className="border-2 border-dashed rounded-lg p-6 text-center">
-                      <div className="flex flex-col items-center gap-4">
-                        <div className="rounded-full bg-primary/10 p-4">
-                          <Upload className="h-8 w-8 text-primary" />
-                        </div>
-                        <div>
-                          <p className="font-medium">Drag and drop video files here</p>
-                          <p className="text-sm text-muted-foreground">Supports MP4, AVI, MOV up to 500MB</p>
-                        </div>
-                        <Button size="sm">Browse Files</Button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Search For</Label>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                      <div className="flex items-center space-x-2">
-                        <Checkbox id="person" />
-                        <Label htmlFor="person" className="text-sm">
-                          Person
-                        </Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox id="vehicle" />
-                        <Label htmlFor="vehicle" className="text-sm">
-                          Vehicle
-                        </Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox id="animal" />
-                        <Label htmlFor="animal" className="text-sm">
-                          Animal
-                        </Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox id="motion" />
-                        <Label htmlFor="motion" className="text-sm">
-                          Motion
-                        </Label>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label>Detection Confidence</Label>
-                    <div className="px-2">
-                      <Slider defaultValue={[70]} max={100} step={1} />
-                    </div>
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                      <span>Low (More Results)</span>
-                      <span>High (More Accurate)</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
-                    <Switch id="draw-boxes" />
-                    <Label htmlFor="draw-boxes">Highlight detected objects in results</Label>
                   </div>
 
                   <Button className="w-full">Search Video Footage</Button>
@@ -343,7 +337,7 @@ export default function SearchPage() {
                                 size="icon"
                                 className="h-12 w-12 rounded-full bg-black/50 text-white hover:bg-black/70"
                               >
-                                <FileVideo className="h-6 w-6" />
+                                <FileVideo className="h-6 w-6 text-blue-400" />
                               </Button>
                             </div>
                             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
@@ -418,17 +412,17 @@ function getEventTypeColor(type: string) {
 function getEventTypeIcon(type: string) {
   switch (type) {
     case "motion":
-      return <Camera className="h-4 w-4" />
+      return <Camera className="h-4 w-4 text-blue-500" />
     case "person":
-      return <User className="h-4 w-4" />
+      return <User className="h-4 w-4 text-purple-500" />
     case "alert":
-      return <AlertTriangle className="h-4 w-4" />
+      return <AlertTriangle className="h-4 w-4 text-red-500" />
     case "system":
-      return <Settings className="h-4 w-4" />
+      return <Settings className="h-4 w-4 text-amber-500" />
     case "user":
-      return <User className="h-4 w-4" />
+      return <User className="h-4 w-4 text-purple-500" />
     default:
-      return <Camera className="h-4 w-4" />
+      return <Camera className="h-4 w-4 text-blue-500" />
   }
 }
 

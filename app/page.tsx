@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Camera, Clock, Bot } from "lucide-react"
+import { Camera, Bot } from "lucide-react"
 import { AppSidebar } from "@/components/app-sidebar"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
@@ -15,11 +15,11 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useRouter } from "next/navigation"
+import { cn } from "@/lib/utils"
 
 export default function Home() {
   const { toast } = useToast()
   const router = useRouter()
-  const [lastUpdated, setLastUpdated] = useState("Just now")
   const [activityItems, setActivityItems] = useState([])
   const [cameraStats, setCameraStats] = useState({ active: 0, total: 0 })
   const [viewerStats, setViewerStats] = useState(0)
@@ -49,21 +49,10 @@ export default function Home() {
     loadData()
 
     // Set up auto-refresh interval
-    const refreshInterval = setInterval(() => {
-      setLastUpdated("Just now")
-
-      // Update last updated time after 30 seconds
-      setTimeout(() => {
-        setLastUpdated("30 seconds ago")
-      }, 30000)
-    }, 60000) // Refresh every minute
+    const refreshInterval = setInterval(() => {}, 60000) // Refresh every minute
 
     return () => clearInterval(refreshInterval)
   }, [])
-
-  const handleRefresh = () => {
-    setLastUpdated("Just now")
-  }
 
   return (
     <SidebarProvider>
@@ -78,8 +67,17 @@ export default function Home() {
               <Badge variant="outline" className="gap-1 border-green-500 text-green-600 dark:text-green-400">
                 <span className="h-2 w-2 rounded-full bg-green-500"></span> System Online
               </Badge>
-              <Badge variant="outline" className="gap-1 cursor-pointer hover:bg-muted/50" onClick={handleRefresh}>
-                <Clock className="h-3 w-3" /> Last updated: {lastUpdated}
+              <Badge
+                variant="outline"
+                className={cn(
+                  "gap-1",
+                  agentActive
+                    ? "border-green-500 text-green-600 dark:text-green-400"
+                    : "border-red-500 text-red-600 dark:text-red-400",
+                )}
+              >
+                <Bot className={`h-3 w-3 ${agentActive ? "text-green-500" : "text-red-500"}`} />
+                Agent {agentActive ? "Active" : "Inactive"}
               </Badge>
             </div>
           </div>

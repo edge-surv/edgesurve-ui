@@ -9,7 +9,8 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { User, RefreshCw, Camera, Settings } from "lucide-react"
+import { User, RefreshCw, Camera, Settings, Bot, Network } from "lucide-react"
+import { Checkbox } from "@/components/ui/checkbox"
 
 export default function SettingsPage() {
   return (
@@ -31,16 +32,24 @@ export default function SettingsPage() {
                   <div className="flex w-full flex-col gap-1">
                     <div className="text-sm font-medium text-muted-foreground mb-2">Settings</div>
                     <TabsTrigger value="user" className="w-full justify-start rounded-md px-3 py-2 text-sm">
-                      <User className="mr-2 h-4 w-4" />
+                      <User className="mr-2 h-4 w-4 text-blue-500" />
                       User Settings
                     </TabsTrigger>
                     <TabsTrigger value="camera" className="w-full justify-start rounded-md px-3 py-2 text-sm">
-                      <Camera className="mr-2 h-4 w-4" />
+                      <Camera className="mr-2 h-4 w-4 text-green-500" />
                       Camera Settings
                     </TabsTrigger>
                     <TabsTrigger value="system" className="w-full justify-start rounded-md px-3 py-2 text-sm">
-                      <Settings className="mr-2 h-4 w-4" />
+                      <Settings className="mr-2 h-4 w-4 text-teal-500" />
                       System Settings
+                    </TabsTrigger>
+                    <TabsTrigger value="ai-agent" className="w-full justify-start rounded-md px-3 py-2 text-sm">
+                      <Bot className="mr-2 h-4 w-4 text-purple-500" />
+                      AI Agent
+                    </TabsTrigger>
+                    <TabsTrigger value="iot" className="w-full justify-start rounded-md px-3 py-2 text-sm">
+                      <Network className="mr-2 h-4 w-4 text-amber-500" />
+                      IoT Integration
                     </TabsTrigger>
                   </div>
                 </TabsList>
@@ -338,7 +347,7 @@ export default function SettingsPage() {
                           </div>
                         </div>
                         <Button variant="outline" className="gap-2">
-                          <RefreshCw className="h-4 w-4" />
+                          <RefreshCw className="h-4 w-4 text-blue-500" />
                           Check for Updates
                         </Button>
                       </div>
@@ -380,6 +389,118 @@ export default function SettingsPage() {
                     </CardContent>
                     <CardFooter>
                       <Button className="ml-auto">Save Changes</Button>
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+
+                {/* AI Agent Settings */}
+                <TabsContent value="ai-agent" className="mt-0">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>AI Agent</CardTitle>
+                      <CardDescription>Configure AI surveillance agent</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="ai-agent-active">AI Agent Active</Label>
+                        <Switch id="ai-agent-active" defaultChecked />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="ai-model">AI Model</Label>
+                        <Select defaultValue="standard">
+                          <SelectTrigger id="ai-model">
+                            <SelectValue placeholder="Select AI model" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="standard">Standard</SelectItem>
+                            <SelectItem value="advanced">Advanced</SelectItem>
+                            <SelectItem value="premium">Premium</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="detection-types">Detection Types</Label>
+                        <div className="space-y-2">
+                          <div className="flex items-center space-x-2">
+                            <Checkbox id="detect-person" defaultChecked />
+                            <Label htmlFor="detect-person" className="text-sm">
+                              Person
+                            </Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Checkbox id="detect-vehicle" defaultChecked />
+                            <Label htmlFor="detect-vehicle" className="text-sm">
+                              Vehicle
+                            </Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Checkbox id="detect-animal" />
+                            <Label htmlFor="detect-animal" className="text-sm">
+                              Animal
+                            </Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <Checkbox id="detect-object" />
+                            <Label htmlFor="detect-object" className="text-sm">
+                              Object
+                            </Label>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button className="w-full">Apply AI Settings</Button>
+                    </CardFooter>
+                  </Card>
+                </TabsContent>
+
+                {/* IoT Integration Settings */}
+                <TabsContent value="iot" className="mt-0">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>IoT Integration</CardTitle>
+                      <CardDescription>Connect with IoT devices</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="iot-enabled">Enable IoT Integration</Label>
+                        <Switch id="iot-enabled" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="iot-protocol">Protocol</Label>
+                        <Select>
+                          <SelectTrigger id="iot-protocol">
+                            <SelectValue placeholder="Select protocol" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="mqtt">MQTT</SelectItem>
+                            <SelectItem value="http">HTTP/REST</SelectItem>
+                            <SelectItem value="zigbee">Zigbee</SelectItem>
+                            <SelectItem value="zwave">Z-Wave</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="iot-server">Server Address</Label>
+                        <Input id="iot-server" placeholder="e.g., mqtt://iot.example.com" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="iot-auth">Authentication</Label>
+                        <Select>
+                          <SelectTrigger id="iot-auth">
+                            <SelectValue placeholder="Select auth method" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="none">None</SelectItem>
+                            <SelectItem value="basic">Basic Auth</SelectItem>
+                            <SelectItem value="token">Token</SelectItem>
+                            <SelectItem value="cert">Certificate</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </CardContent>
+                    <CardFooter>
+                      <Button className="w-full">Connect Devices</Button>
                     </CardFooter>
                   </Card>
                 </TabsContent>

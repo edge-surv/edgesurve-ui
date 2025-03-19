@@ -19,7 +19,6 @@ import { usePathname, useRouter } from "next/navigation"
 import Link from "next/link"
 
 import { Logo } from "@/components/logo"
-import { useTheme } from "@/components/theme-provider"
 import {
   Sidebar,
   SidebarContent,
@@ -48,7 +47,6 @@ import { Badge } from "@/components/ui/badge"
 import { useToast } from "@/hooks/use-toast"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { setTheme, theme } = useTheme()
   const pathname = usePathname()
   const router = useRouter()
   const { toast } = useToast()
@@ -58,11 +56,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     email: "",
     avatar: "/placeholder.svg?height=32&width=32",
   })
-
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark"
-    setTheme(newTheme)
-  }
 
   const handleLogout = () => {
     // Simulate logout process
@@ -86,7 +79,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: "Livestream",
       icon: Video,
       url: "/livestream",
-      color: "text-red-500",
+      color: "text-purple-500",
     },
     {
       title: "Camera",
@@ -98,26 +91,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: "Intelligent Search",
       icon: Search,
       url: "/search",
-      color: "text-purple-500",
+      color: "text-amber-500",
     },
     {
       title: "Notifications",
       icon: Bell,
       url: "/notifications",
+      color: "text-red-500",
       badge: unreadNotifications.toString(),
-      color: "text-yellow-500",
     },
     {
       title: "Help Center",
       icon: HelpCircle,
       url: "/help",
-      color: "text-teal-500",
+      color: "text-indigo-500",
     },
     {
       title: "Settings",
       icon: Settings,
       url: "/settings",
-      color: "text-gray-500",
+      color: "text-teal-500",
     },
   ]
 
@@ -186,16 +179,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleProfileClick}>
-                  <User className="mr-2 h-4 w-4" />
+                  <User className="mr-2 h-4 w-4 text-blue-500" />
                   Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => router.push("/settings")}>
-                  <Settings className="mr-2 h-4 w-4" />
+                  <Settings className="mr-2 h-4 w-4 text-teal-500" />
                   Settings
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>
-                  <LogOut className="mr-2 h-4 w-4" />
+                  <LogOut className="mr-2 h-4 w-4 text-red-500" />
                   Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>

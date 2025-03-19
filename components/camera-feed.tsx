@@ -113,7 +113,7 @@ export function CameraFeed({
                 className="h-8 w-8 text-white hover:bg-white/20"
                 onClick={handlePlayToggle}
               >
-                {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                {isPlaying ? <Pause className="h-4 w-4 text-red-400" /> : <Play className="h-4 w-4 text-green-400" />}
               </Button>
               <Button
                 variant="ghost"
@@ -121,7 +121,11 @@ export function CameraFeed({
                 className="h-8 w-8 text-white hover:bg-white/20"
                 onClick={handleMuteToggle}
               >
-                {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+                {isMuted ? (
+                  <VolumeX className="h-4 w-4 text-red-400" />
+                ) : (
+                  <Volume2 className="h-4 w-4 text-green-400" />
+                )}
               </Button>
             </div>
             <div className="flex items-center gap-1">
@@ -131,12 +135,12 @@ export function CameraFeed({
                 className="h-8 w-8 text-white hover:bg-white/20"
                 onClick={handleFullscreenToggle}
               >
-                <Maximize className="h-4 w-4" />
+                <Maximize className="h-4 w-4 text-blue-400" />
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-white/20">
-                    <MoreVertical className="h-4 w-4" />
+                    <MoreVertical className="h-4 w-4 text-amber-400" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
