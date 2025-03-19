@@ -6,18 +6,17 @@ export interface Logs {
   date: string;
   time: string;
 }
-
-export interface Camera {
+export interface Cameras {
   id: string;
+  host: string;
+  port: number;
   name: string;
+  username: string;
+  password: string;
+  provider: string;
   location: string;
   status: "online" | "offline" | "recording";
-  stream_url: string;
-  username?: string;
-  password?: string;
-  provider?: string;
 }
-
 export interface Notifications {
   id: string;
   objects: string[];

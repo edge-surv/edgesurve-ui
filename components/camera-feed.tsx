@@ -1,17 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import {
-  Play,
-  Volume2,
-  Maximize,
-  MoreVertical,
-  Pause,
-  VolumeX,
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +9,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
+import { API_BASE_URL } from "@/services";
+import {
+  Maximize,
+  MoreVertical,
+  Pause,
+  Play,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
+import { useState } from "react";
 
 interface CameraFeedProps {
   id?: string;
@@ -42,7 +43,6 @@ export function CameraFeed({
   name,
   location,
   status = "online",
-  stream_url = "/placeholder.svg?height=300&width=500",
   className,
   isLoading = false,
   onViewClick,
@@ -79,7 +79,7 @@ export function CameraFeed({
       ) : (
         <div className="relative aspect-video w-full overflow-hidden bg-black">
           <img
-            src={stream_url || "/placeholder.svg"}
+            src={`${API_BASE_URL}/api/streams/${id}/surveillance/`}
             alt={`Camera feed: ${name}`}
             className="h-full w-full object-cover opacity-80"
           />

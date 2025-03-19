@@ -28,7 +28,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
-import { Logs, Notifications } from "@/interfaces";
+import { Cameras, Logs, Notifications } from "@/interfaces";
 import { cn } from "@/lib/utils";
 import { API } from "@/services";
 import { Bot, Camera, ImageIcon } from "lucide-react";
@@ -41,7 +41,7 @@ export default function Home() {
   const [logs, setLogs] = useState<Logs[]>([]);
   const [notifications, setNotifications] = useState([]);
   const [cameraStats, setCameraStats] = useState({ active: 0, total: 0 });
-  const [cameras, setCameras] = useState([]);
+  const [cameras, setCameras] = useState<Cameras[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [agentActive, setAgentActive] = useState(false);
 
@@ -256,13 +256,13 @@ export default function Home() {
                     ))
                 : cameras
                     .slice(0, 3)
-                    .map((camera: any) => (
+                    .map((camera) => (
                       <CameraFeed
                         key={camera.id}
+                        id={camera.id}
                         name={camera.name}
                         location={camera.location}
                         status={camera.status}
-                        stream_url={camera.stream_url}
                         isLoading={isLoading}
                         onViewClick={() => router.push(`/cameras/${camera.id}`)}
                         onSettingsClick={() =>
@@ -339,7 +339,9 @@ export default function Home() {
                 <h3 className="font-semibold">Notifications</h3>
                 <div className="flex items-center gap-2">
                   <Badge variant="outline" className="ml-auto">
-                    {isLoading ? "..." : "0 unread"}
+                    {isLoading
+                      ? "..."
+                      : `${notifications.length} notifications`}
                   </Badge>
                   <Button
                     variant="ghost"
@@ -372,8 +374,9 @@ export default function Home() {
                       ))
                   ) : (
                     <div className="space-y-4">
-                      {notifications.map(
-                        (notification: Notifications, index: number) => (
+                      {notifications
+                        .slice(0, 5)
+                        .map((notification: Notifications, index: number) => (
                           <Card key={index}>
                             <CardContent className="flex items-start gap-3">
                               <div className="flex-1">
@@ -402,8 +405,7 @@ export default function Home() {
                               </div>
                             </CardContent>
                           </Card>
-                        )
-                      )}
+                        ))}
                       {notifications.length === 0 && (
                         <Card className="py-8">
                           <CardContent className="flex flex-col items-center justify-center text-center">
