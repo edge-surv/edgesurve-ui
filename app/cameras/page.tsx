@@ -1,3 +1,4 @@
+"use client";
 import { AppSidebar } from "@/components/app-sidebar";
 import {
   SidebarInset,
@@ -31,72 +32,39 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
-
-// Sample camera data
-const cameras = [
-  {
-    id: "cam-001",
-    name: "Front Entrance",
-    provider: "Hikvision",
-    ipAddress: "192.168.1.101",
-    status: "online",
-    resolution: "1080p",
-    location: "Main Building",
-    lastMaintenance: "2025-02-15",
-  },
-  {
-    id: "cam-002",
-    name: "Parking Lot",
-    provider: "Dahua",
-    ipAddress: "192.168.1.102",
-    status: "online",
-    resolution: "4K",
-    location: "North Side",
-    lastMaintenance: "2025-01-20",
-  },
-  {
-    id: "cam-003",
-    name: "Reception Area",
-    provider: "Axis",
-    ipAddress: "192.168.1.103",
-    status: "online",
-    resolution: "1080p",
-    location: "Main Building",
-    lastMaintenance: "2025-03-01",
-  },
-  {
-    id: "cam-004",
-    name: "Back Door",
-    provider: "Hikvision",
-    ipAddress: "192.168.1.104",
-    status: "online",
-    resolution: "1080p",
-    location: "Warehouse",
-    lastMaintenance: "2025-02-10",
-  },
-  {
-    id: "cam-005",
-    name: "Loading Dock",
-    provider: "Dahua",
-    ipAddress: "192.168.1.105",
-    status: "offline",
-    resolution: "1080p",
-    location: "Warehouse",
-    lastMaintenance: "2025-01-15",
-  },
-  {
-    id: "cam-006",
-    name: "Server Room",
-    provider: "Axis",
-    ipAddress: "192.168.1.106",
-    status: "online",
-    resolution: "1080p",
-    location: "IT Department",
-    lastMaintenance: "2025-02-28",
-  },
-];
+import { useToast } from "@/hooks/use-toast";
+import { useState, useEffect } from "react";
+import { API } from "@/services";
+import { Cameras } from "@/interfaces";
+import Link from "next/link";
 
 export default function CameraSettingsPage() {
+  const { toast } = useToast();
+  const [cameras, setCameras] = useState<Cameras[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCameras = async () => {
+      setIsLoading(true);
+      try {
+        const response = await API.get("/cameras");
+        const camerasData = response.data.cameras;
+        setCameras(camerasData);
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to fetch camera data",
+          variant: "destructive",
+          className: "bg-red-500 text-white",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCameras();
+  }, []);
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -108,8 +76,11 @@ export default function CameraSettingsPage() {
             <h1 className="text-xl font-semibold">Camera</h1>
             <div className="flex items-center gap-2">
               <Badge variant="outline" className="gap-1">
-                <span className="h-2 w-2 rounded-full bg-green-500"></span> 12
-                Cameras Configured
+                <span className="h-2 w-2 rounded-full bg-green-500"></span>{" "}
+                {cameras.length > 1
+                  ? `${cameras.length} Cameras `
+                  : `${cameras.length} Camera`}{" "}
+                Configured
               </Badge>
             </div>
           </div>
@@ -123,10 +94,12 @@ export default function CameraSettingsPage() {
                   View and manage all connected cameras
                 </CardDescription>
               </div>
-              <Button className="gap-2">
-                <PlusCircle className="h-4 w-4" />
-                Add Camera
-              </Button>
+              <Link href="/cameras/new">
+                <Button className="gap-2">
+                  <PlusCircle className="h-4 w-4" />
+                  Add Camera
+                </Button>
+              </Link>
             </CardHeader>
             <CardContent>
               <ScrollArea className="h-[calc(100vh-280px)]">
@@ -140,11 +113,9 @@ export default function CameraSettingsPage() {
                         <th className="p-3 text-left font-medium hidden md:table-cell">
                           Provider
                         </th>
-                        <th className="p-3 text-left font-medium">
-                          IP Address
-                        </th>
+                        <th className="p-3 text-left font-medium">Host</th>
                         <th className="p-3 text-left font-medium hidden md:table-cell">
-                          Resolution
+                          Port
                         </th>
                         <th className="p-3 text-left font-medium hidden lg:table-cell">
                           Location
@@ -163,9 +134,9 @@ export default function CameraSettingsPage() {
                           <td className="p-3 hidden md:table-cell">
                             {camera.provider}
                           </td>
-                          <td className="p-3">{camera.ipAddress}</td>
+                          <td className="p-3">{camera.host}</td>
                           <td className="p-3 hidden md:table-cell">
-                            {camera.resolution}
+                            {camera.port}
                           </td>
                           <td className="p-3 hidden lg:table-cell">
                             {camera.location}
@@ -186,27 +157,20 @@ export default function CameraSettingsPage() {
                                     : "bg-red-500"
                                 }`}
                               ></span>
-                              {camera.status === "online"
-                                ? "Online"
-                                : "Offline"}
+                              {camera.status}
                             </Badge>
                           </td>
                           <td className="p-3 text-right">
                             <div className="flex items-center justify-end gap-2">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8"
-                              >
-                                <Eye className="h-4 w-4 text-blue-500" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8"
-                              >
-                                <Edit className="h-4 w-4 text-amber-500" />
-                              </Button>
+                              <Link href={`/cameras/${camera.id}/edit`}>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-8 w-8"
+                                >
+                                  <Edit className="h-4 w-4 text-amber-500" />
+                                </Button>
+                              </Link>
                               <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                   <Button
@@ -223,18 +187,30 @@ export default function CameraSettingsPage() {
                                   </DropdownMenuLabel>
                                   <DropdownMenuSeparator />
                                   <DropdownMenuItem>
-                                    <Settings className="mr-2 h-4 w-4 text-teal-500" />
-                                    Configure
+                                    <Link
+                                      href={`/cameras/${camera.id}/configure`}
+                                      className="flex items-center"
+                                    >
+                                      <Settings className="mr-2 h-4 w-4 text-teal-500" />
+                                      Configure
+                                    </Link>
                                   </DropdownMenuItem>
                                   <DropdownMenuItem>
-                                    <Eye className="mr-2 h-4 w-4 text-blue-500" />
-                                    View Livestream
+                                    <Link
+                                      href={`/livestream/${camera.id}`}
+                                      className="flex items-center"
+                                    >
+                                      <Eye className="mr-2 h-4 w-4 text-blue-500" />
+                                      View Livestream
+                                    </Link>
                                   </DropdownMenuItem>
                                   <DropdownMenuSeparator />
                                   <DropdownMenuItem className="text-red-600">
-                                    <Trash2 className="mr-2 h-4 w-4" />
-                                    Delete
-                                  </DropdownMenuItem>
+                                    <div className="flex items-center">
+                                      <Trash2 className="mr-2 h-4 w-4" />
+                                      Delete
+                                    </div>
+                                  </DropdownMenuItem>{" "}
                                 </DropdownMenuContent>
                               </DropdownMenu>
                             </div>
