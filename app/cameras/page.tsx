@@ -37,11 +37,23 @@ import { useState, useEffect } from "react";
 import { API } from "@/services";
 import { Cameras } from "@/interfaces";
 import Link from "next/link";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function CameraSettingsPage() {
   const { toast } = useToast();
   const [cameras, setCameras] = useState<Cameras[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [selectedCamera, setSelectedCamera] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchCameras = async () => {
@@ -64,6 +76,27 @@ export default function CameraSettingsPage() {
 
     fetchCameras();
   }, []);
+
+  const handleDelete = async (cameraId: string) => {
+    try {
+      await API.delete(`/cameras/${cameraId}`);
+      setCameras(cameras.filter((camera) => camera.id !== cameraId));
+      toast({
+        title: "Success",
+        description: "Camera deleted successfully",
+        className: "bg-green-500 text-white",
+        variant: "default",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete camera",
+        variant: "destructive",
+        className: "bg-red-500 text-white",
+      });
+    }
+    setShowDeleteDialog(false);
+  };
 
   return (
     <SidebarProvider>
@@ -96,7 +129,7 @@ export default function CameraSettingsPage() {
               </div>
               <Link href="/cameras/new">
                 <Button className="gap-2">
-                  <PlusCircle className="h-4 w-4" />
+                  <PlusCircle className="h-4 w-4 text-green-500" />
                   Add Camera
                 </Button>
               </Link>
@@ -205,12 +238,18 @@ export default function CameraSettingsPage() {
                                     </Link>
                                   </DropdownMenuItem>
                                   <DropdownMenuSeparator />
-                                  <DropdownMenuItem className="text-red-600">
+                                  <DropdownMenuItem
+                                    className="text-red-600"
+                                    onClick={() => {
+                                      setSelectedCamera(camera.id);
+                                      setShowDeleteDialog(true);
+                                    }}
+                                  >
                                     <div className="flex items-center">
                                       <Trash2 className="mr-2 h-4 w-4" />
                                       Delete
                                     </div>
-                                  </DropdownMenuItem>{" "}
+                                  </DropdownMenuItem>
                                 </DropdownMenuContent>
                               </DropdownMenu>
                             </div>
@@ -225,6 +264,27 @@ export default function CameraSettingsPage() {
           </Card>
         </main>
       </SidebarInset>
+
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the
+              camera from the system.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => selectedCamera && handleDelete(selectedCamera)}
+              className="bg-red-500 hover:bg-red-600"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </SidebarProvider>
   );
 }

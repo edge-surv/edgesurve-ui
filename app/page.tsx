@@ -109,8 +109,6 @@ export default function Home() {
         const response = await API.get("/agents/status");
         const agentStatus = response.data.status;
 
-        console.log(agentStatus);
-
         setAgentActive(agentStatus);
       } catch (error) {
         toast({

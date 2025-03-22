@@ -12,13 +12,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { API_BASE_URL } from "@/services";
 import {
+  Edit,
   Maximize,
   MoreVertical,
   Pause,
   Play,
+  Settings,
   Volume2,
   VolumeX,
 } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface CameraFeedProps {
@@ -45,12 +49,10 @@ export function CameraFeed({
   status = "online",
   className,
   isLoading = false,
-  onViewClick,
-  onSettingsClick,
 }: CameraFeedProps) {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const router = useRouter();
 
   const handlePlayToggle = () => {
     setIsPlaying(!isPlaying);
@@ -61,8 +63,7 @@ export function CameraFeed({
   };
 
   const handleFullscreenToggle = () => {
-    setIsFullscreen(!isFullscreen);
-    onViewClick?.();
+    router.push(`/livestream/${id}`);
   };
 
   return (
@@ -171,15 +172,24 @@ export function CameraFeed({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => alert("Screenshot taken")}>
-                    Take Screenshot
+                  <DropdownMenuItem>
+                    <Link
+                      href={`/cameras/${id}/edit`}
+                      className="flex items-center"
+                    >
+                      <Edit className="mr-2 h-4 w-4 text-orange-400" />
+                      Edit
+                    </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => alert("Recording started")}>
-                    Start Recording
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={onSettingsClick}>
-                    Camera Settings
-                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link
+                      href={`/cameras/${id}/configure`}
+                      className="flex items-center"
+                    >
+                      <Settings className="mr-2 h-4 w-4 text-green-400" />
+                      Camera Settings
+                    </Link>
+                  </DropdownMenuItem>{" "}
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>

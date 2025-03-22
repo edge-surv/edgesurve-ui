@@ -60,25 +60,17 @@ export default function LivestreamPage() {
           </div>
         </header>
         <main className="animate-fade-in flex flex-1 flex-col h-[calc(100vh-64px)]">
-          <div className="flex flex-wrap gap-6 p-6 h-full">
-            {cameras.map((camera) => (
-              <div
-                key={camera.id}
-                className={`${
-                  cameras.length === 1
-                    ? "w-full h-full"
-                    : "w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] h-[calc(33.333vh-32px)]"
-                }`}
-              >
-                <CameraFeed
-                  id={camera.id}
-                  name={camera.name}
-                  location={camera.location}
-                  status={camera.status}
-                  isLoading={isLoading}
-                  className="h-full"
-                />
-              </div>
+          <div className="grid gap-6 md:grid-cols-2 px-3 py-2 ">
+            {cameras.map((camera, index) => (
+              <CameraFeed
+                key={index}
+                id={camera.id}
+                name={camera.name}
+                location={camera.location}
+                status={camera.status}
+                isLoading={isLoading}
+                className="h-full"
+              />
             ))}
           </div>
         </main>
