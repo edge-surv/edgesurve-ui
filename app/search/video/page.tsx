@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -20,25 +21,36 @@ import {
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import { API, CDN_BASE_URL } from "@/services";
-import { SearchIcon, Video } from "lucide-react";
+import { API, API_BASE_URL } from "@/services";
+import { ArrowLeft, Upload } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 
-interface LogResult {
+interface VideoResult {
   search: boolean;
   timestamps: string[];
   total_detections: number;
   output_files: string[];
 }
 
-export default function SearchPage() {
+export default function VideoSearchPage() {
   const { toast } = useToast();
-  const [logEntries, setLogEntries] = useState<LogResult[]>([]);
+  const [videoResults, setVideoResults] = useState<VideoResult[]>([]);
   const [searchPrompt, setSearchPrompt] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogSearch = async () => {
+  const handleVideoSearch = async () => {
+    if (!selectedFile) {
+      toast({
+        title: "Error",
+        description: "Please select a video file",
+        variant: "destructive",
+        className: "bg-red-500 text-white",
+      });
+      return;
+    }
+
     if (!searchPrompt) {
       toast({
         title: "Error",
@@ -49,17 +61,25 @@ export default function SearchPage() {
       return;
     }
 
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    formData.append("prompt", searchPrompt);
+    formData.append("confidence", "0.25");
+    formData.append("save_output", "true");
+
     setIsLoading(true);
     try {
-      const response = await API.post("/search/logs-search", {
-        prompt: searchPrompt,
+      const response = await API.post("/upload-search", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       if (response.data.search) {
-        setLogEntries([response.data]);
+        setVideoResults([response.data]);
         toast({
           title: "Success",
-          description: "Log search completed successfully",
+          description: "Video search completed successfully",
           variant: "default",
           className: "bg-green-500 text-white",
         });
@@ -67,12 +87,18 @@ export default function SearchPage() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to search logs",
+        description: "Failed to search video",
         variant: "destructive",
         className: "bg-red-500 text-white",
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedFile(event.target.files[0]);
     }
   };
 
@@ -102,12 +128,12 @@ export default function SearchPage() {
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 h-4" />
           <div className="flex flex-1 items-center justify-between">
-            <h1 className="text-xl font-semibold">Log Search</h1>
+            <h1 className="text-xl font-semibold">Video Search</h1>
             <div className="flex items-center gap-4">
-              <Link href="/search/video">
+              <Link href="/search">
                 <Button variant="outline" className="flex items-center gap-2">
-                  <Video className="h-4 w-4" />
-                  Video Search
+                  <ArrowLeft className="h-4 w-4" />
+                  Back to Log Search
                 </Button>
               </Link>
               <Badge variant="outline" className="gap-1">
@@ -119,24 +145,51 @@ export default function SearchPage() {
         <main className="animate-fade-in flex flex-1 flex-col gap-6 p-6">
           <Card>
             <CardHeader>
-              <CardTitle>Search System Logs</CardTitle>
+              <CardTitle>Video Search</CardTitle>
               <CardDescription>
-                Search through system events and activities
+                Search through video footage using AI
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex gap-4">
-                <div className="relative flex-1">
-                  <SearchIcon className="absolute left-3 top-3 h-4 w-4 text-blue-500" />
+              <div className="space-y-4">
+                <div>
+                  <Label>Upload Video</Label>
+                  <div className="mt-2 border-2 border-dashed rounded-lg p-4 text-center">
+                    <Input
+                      type="file"
+                      accept="video/*"
+                      onChange={handleFileChange}
+                      className="hidden"
+                      id="video-upload"
+                    />
+                    <Label htmlFor="video-upload" className="cursor-pointer">
+                      <Upload className="h-8 w-8 mx-auto mb-2" />
+                      <p>Click to upload or drag and drop</p>
+                      <p className="text-sm text-muted-foreground">
+                        MP4, AVI, MOV supported
+                      </p>
+                      {selectedFile && (
+                        <p className="mt-2 text-sm font-medium text-green-600">
+                          Selected: {selectedFile.name}
+                        </p>
+                      )}
+                    </Label>
+                  </div>
+                </div>
+                <div>
+                  <Label>Search Prompt</Label>
                   <Input
-                    placeholder="Enter search prompt..."
-                    className="pl-10"
+                    placeholder="Enter what to search for..."
                     value={searchPrompt}
                     onChange={(e) => setSearchPrompt(e.target.value)}
                   />
                 </div>
-                <Button onClick={handleLogSearch} disabled={isLoading}>
-                  {isLoading ? "Searching..." : "Search Logs"}
+                <Button
+                  className="w-full"
+                  onClick={handleVideoSearch}
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Processing..." : "Search Video"}
                 </Button>
               </div>
             </CardContent>
@@ -146,25 +199,27 @@ export default function SearchPage() {
                   {isLoading ? (
                     <LoadingSkeleton />
                   ) : (
-                    logEntries.map((entry, index) => (
+                    videoResults.map((result, index) => (
                       <Card key={index} className="mb-4">
                         <CardHeader>
-                          <CardTitle>Search Results </CardTitle>
+                          <CardTitle>Detection #{index + 1}</CardTitle>
                         </CardHeader>
                         <CardContent>
                           <div className="space-y-2">
                             <p className="font-semibold">
-                              Total Detections: {entry.total_detections}
+                              Total Detections: {result.total_detections}
                             </p>
-
+                            <p className="text-sm text-muted-foreground">
+                              Timestamps: {result.timestamps.join(", ")}
+                            </p>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
-                              {entry.output_files.map((file, fileIndex) => (
+                              {result.output_files.map((file, fileIndex) => (
                                 <div
                                   key={fileIndex}
                                   className="relative aspect-video w-full"
                                 >
                                   <img
-                                    src={`${CDN_BASE_URL}/images/search/logs/${file}`}
+                                    src={`${API_BASE_URL}/${file}`}
                                     alt={`Detection ${fileIndex + 1}`}
                                     className="object-cover rounded-md w-full h-full"
                                   />
