@@ -7,7 +7,7 @@ export interface Logs {
   time: string;
 }
 export interface Cameras {
-  id: string;
+  id?: string;
   host: string;
   port: number;
   name: string;
@@ -22,4 +22,18 @@ export interface Notifications {
   objects: string[];
   date: string;
   time: string;
+}
+
+export interface CameraSettings {
+  id?: string;
+  camera_id: string;
+  detection_objects: string[];
+  enabled: boolean;
+  minimum_confidence: number;
+  enable_tracking: boolean;
+  enable_counting: boolean;
+  enable_zone: boolean;
+  save_footage: boolean;
+  start_time: string;
+  end_time: string;
 }

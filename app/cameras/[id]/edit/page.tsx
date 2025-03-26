@@ -100,6 +100,7 @@ export default function EditCameraPage() {
           className: "bg-green-500 text-white",
           variant: "default",
         });
+
         router.push("/cameras");
       }
     } catch (error) {

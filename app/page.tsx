@@ -54,6 +54,8 @@ export default function Home() {
 
         setCameras(camerasData);
 
+        console.log(camerasData);
+
         setCameraStats({
           active: camerasData.length,
           total: camerasData.length,

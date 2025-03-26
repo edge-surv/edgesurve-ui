@@ -37,7 +37,6 @@ export default function AddCameraPage() {
   const router = useRouter();
 
   const [formData, setFormData] = useState<Cameras>({
-    id: "",
     name: "",
     provider: "",
     host: "",
@@ -77,7 +76,9 @@ export default function AddCameraPage() {
           className: "bg-green-500 text-white",
           variant: "default",
         });
-        router.push("/cameras");
+        const cameraId = response.data.camera_id;
+
+        router.push(`/cameras/${cameraId}/configure`);
       }
     } catch (error) {
       toast({
